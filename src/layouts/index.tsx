@@ -1,0 +1,29 @@
+import React, { FC } from 'react';
+import { ConfigProvider } from 'antd';
+import { connect } from 'dva';
+import { Dispatch } from 'redux'
+import zhCN from 'antd/es/locale/zh_CN';
+import Unauthorized from '@/components/unauthorized'
+import { AuthenticateState } from '@/models/authenticate'
+
+interface IndexPropsType {
+  dispatch: Dispatch
+  authenticate: AuthenticateState
+}
+
+const Index: FC<IndexPropsType> = ({ authenticate }) => {
+  console.log(authenticate)
+  return (
+    <Unauthorized />
+  );
+}
+
+const IndexWrapper: FC<IndexPropsType> = (props) => {
+  return (
+    <ConfigProvider locale={zhCN}>
+      <Index {...props} />
+    </ConfigProvider>
+  );
+}
+
+export default connect(({ authenticate }) => ({ authenticate }))(IndexWrapper);

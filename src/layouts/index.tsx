@@ -5,6 +5,7 @@ import { Dispatch } from 'redux'
 import zhCN from 'antd/es/locale/zh_CN';
 import Unauthorized from '@/components/unauthorized'
 import { AuthenticateState } from '@/models/authenticate'
+import LeftRightLayout from './leftRightLayout'
 
 interface IndexPropsType {
   dispatch: Dispatch
@@ -13,9 +14,12 @@ interface IndexPropsType {
 
 const Index: FC<IndexPropsType> = ({ authenticate }) => {
   console.log(authenticate)
+  // return (
+  //   <Unauthorized />
+  // );
   return (
-    <Unauthorized />
-  );
+    <LeftRightLayout />
+  )
 }
 
 const IndexWrapper: FC<IndexPropsType> = (props) => {

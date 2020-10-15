@@ -5,7 +5,7 @@ import styles from './index.less';
 
 const { Item: FormItem } = Form;
 
-const Index: FC<{}> = ({}) => {
+const Index: FC<{}> = ({ }) => {
   const layout = {
     labelCol: { span: 0 },
     wrapperCol: { span: 24 },
@@ -41,7 +41,7 @@ const Index: FC<{}> = ({}) => {
             >
               <Input.Password
                 prefix={<UnlockOutlined className={styles.icon} />}
-                placeholder="请输入用户名"
+                placeholder="请输入密码"
               />
             </FormItem>
 

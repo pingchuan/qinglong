@@ -11,4 +11,7 @@ export default defineConfig({
     { path: '/', component: '@/layouts/index' },
     { path: '/login', component: '@/pages/login/index' },
   ],
+  links: [
+    { rel: 'icon', href: '/images/qinglong.jpg' },
+  ],
 });

@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import routes from './config/router';
 
 export default defineConfig({
   alias: {
@@ -7,11 +8,8 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [
-    { path: '/', component: '@/layouts/index' },
-    { path: '/login', component: '@/pages/login/index' },
-  ],
+  routes: routes,
   links: [
-    { rel: 'icon', href: '/images/qinglong.jpg' },
+    { rel: 'icon', href: '/icon.jpg' },
   ],
 });

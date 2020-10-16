@@ -1,29 +1,38 @@
 import React, { FC } from 'react';
-import { Menu, Button } from 'antd';
+import { Menu } from 'antd';
+import { MenuClickEventHandler } from 'antd/node_modules/rc-menu/lib/interface'
+import { history } from 'umi';
 import {
   AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined,
   MailOutlined,
 } from '@ant-design/icons';
-import styles from './index.less';
 
 const { SubMenu, Item: MenuItem } = Menu;
 
-const Index = () => {
+const Index: FC<{}> = () => {
+
+  /**
+   * 菜单点击
+   * @param param0 MenuClickEventHandler
+   */
+  const menuOnClick: MenuClickEventHandler = ({ key }) => {
+    history.push(key);
+  }
+
   return (
     <Menu
       defaultSelectedKeys={['1']}
       defaultOpenKeys={['sub1']}
       mode="inline"
+      onClick={menuOnClick}
     >
-      <MenuItem key="1" icon={<PieChartOutlined />}>
+      <MenuItem key="/test1" icon={<PieChartOutlined />}>
         Option 1
           </MenuItem>
-      <MenuItem key="2" icon={<DesktopOutlined />}>
+      <MenuItem key="/test2" icon={<DesktopOutlined />}>
         Option 2
           </MenuItem>
       <MenuItem key="3" icon={<ContainerOutlined />}>

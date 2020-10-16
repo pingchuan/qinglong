@@ -1,3 +1,5 @@
+@import '~@/assets/less/color.less';
+
 .layout {
   display : flex;
   width   : 100%;
@@ -6,14 +8,15 @@
 }
 
 .menu {
-  width       : 250px;
-  height      : 100%;
-  box-sizing  : border-box;
-  border-right: 1px solid #16a085;
-  overflow    : auto;
+  width           : 250px;
+  height          : 100%;
+  box-sizing      : border-box;
+  background-color: @green;
+  overflow        : auto;
 }
 
 .content {
-  flex  : 1;
-  height: 100%;
+  flex    : 1;
+  height  : 100%;
+  overflow: auto;
 }

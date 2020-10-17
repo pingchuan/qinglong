@@ -6,9 +6,9 @@ const Index: FC<{}> = (props) => {
   const { children } = props;
   return (
     <div className={styles.layout}>
-      <section className={styles.menu}>
+      {/* <section className={styles.menu}>
         <LeftMenu />
-      </section>
+      </section> */}
       <section className={styles.content}>{children}</section>
     </div>
   );

@@ -34,8 +34,9 @@ function statusValidate(response: Response) {
   const { status, statusText } = response;
   const statusString = String(status);
   if (statusString.startsWith('4') || statusString.startsWith('5')) {
-    throw Error(statusText);
+    Promise.reject(statusText);
   }
+
 }
 
 export default index;

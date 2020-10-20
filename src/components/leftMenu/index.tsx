@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Menu } from "antd";
-import { MenuClickEventHandler } from "antd/node_modules/rc-menu/lib/interface";
+import { MenuClickEventHandler } from "rc-menu/lib/interface";
 import { history } from "umi";
 import {
   AppstoreOutlined,

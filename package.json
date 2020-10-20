@@ -17,7 +17,7 @@
     ],
     "*.ts?(x)": [
       "prettier --parser=typescript --write",
-      "eslint --fix",
+      "eslint --fix src/",
       "git add"
     ]
   },

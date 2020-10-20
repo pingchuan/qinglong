@@ -6,7 +6,7 @@ interface ExtendOptions extends RequestInit {
 }
 
 interface IndexType {
-  (url: RequestInfo, options?: ExtendOptions): Promise<Object>
+  (url: RequestInfo, options?: ExtendOptions): Promise<Record<string, unknown>>
 }
 
 enum ContentType {

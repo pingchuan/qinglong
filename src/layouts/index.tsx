@@ -1,11 +1,11 @@
-import React, { FC, useEffect } from 'react';
-import { ConfigProvider, message } from 'antd';
-import { connect } from 'dva';
-import { Dispatch } from 'redux';
-import zhCN from 'antd/es/locale/zh_CN';
+import React, { FC, useEffect } from "react";
+import { ConfigProvider, message } from "antd";
+import { connect } from "dva";
+import { Dispatch } from "redux";
+import zhCN from "antd/es/locale/zh_CN";
 // import Unauthorized from '@/components/unauthorized';
-import { AuthenticateState } from '@/models/authenticate';
-import LeftRightLayout from './leftRightLayout';
+import { AuthenticateState } from "@/models/authenticate";
+import LeftRightLayout from "./leftRightLayout";
 
 interface IndexPropsType {
   dispatch: Dispatch;
@@ -24,7 +24,7 @@ const Index: FC<IndexPropsType> = props => {
 const IndexWrapper: FC<IndexPropsType> = props => {
   useEffect(() => {
     window.addEventListener(
-      'unhandledrejection',
+      "unhandledrejection",
       function(e) {
         e.preventDefault(); // 清除控制台的异常
         message.error(e.reason);

@@ -1,19 +1,19 @@
 // import { Effect } from 'dva';
-import { Reducer } from 'redux';
+import { Reducer } from "redux";
 
 export interface AuthenticateState {
   userId: string;
   userName: string;
 }
 
-declare module 'react-redux' {
+declare module "react-redux" {
   interface DefaultRootState {
     authenticate: AuthenticateState;
   }
 }
 
 export interface IndexModelType {
-  namespace: 'authenticate';
+  namespace: "authenticate";
   state: AuthenticateState;
   // effects: {
   //   query: Effect;
@@ -25,10 +25,10 @@ export interface IndexModelType {
 }
 
 const IndexModel: IndexModelType = {
-  namespace: 'authenticate',
+  namespace: "authenticate",
   state: {
-    userId: '',
-    userName: '',
+    userId: "",
+    userName: "",
   },
   // effects: {
   //   *query({ payload }, { call, put }) {

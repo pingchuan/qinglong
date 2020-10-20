@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
-import { Menu } from 'antd';
-import { MenuClickEventHandler } from 'antd/node_modules/rc-menu/lib/interface';
-import { history } from 'umi';
+import React, { FC } from "react";
+import { Menu } from "antd";
+import { MenuClickEventHandler } from "antd/node_modules/rc-menu/lib/interface";
+import { history } from "umi";
 import {
   AppstoreOutlined,
   PieChartOutlined,
   DesktopOutlined,
   ContainerOutlined,
   MailOutlined,
-} from '@ant-design/icons';
+} from "@ant-design/icons";
 
 const { SubMenu, Item: MenuItem } = Menu;
 
@@ -23,8 +23,8 @@ const Index: FC = () => {
 
   return (
     <Menu
-      defaultSelectedKeys={['1']}
-      defaultOpenKeys={['sub1']}
+      defaultSelectedKeys={["1"]}
+      defaultOpenKeys={["sub1"]}
       mode="inline"
       onClick={menuOnClick}
     >

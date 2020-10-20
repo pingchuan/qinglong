@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
-import { Drawer, Button } from 'antd';
-import styles from './index.less';
+import React, { FC } from "react";
+import { Drawer, Button } from "antd";
+import styles from "./index.less";
 
 declare const ButtonTypes: ["default", "primary", "ghost", "dashed", "link", "text"];
 type ButtonType = typeof ButtonTypes[number];
@@ -9,7 +9,7 @@ interface Props {
   visible: boolean;
   title?: string | JSX.Element;
   width?: number;
-  placement?: 'right' | 'left';
+  placement?: "right" | "left";
   footer?: JSX.Element;
   footerExtend?: JSX.Element;
   okOption?: {
@@ -52,16 +52,16 @@ const Index: FC<Props> = (props) => {
             type={cancelOption?.type}
             className={styles.cancelBt}
             onClick={onCancel}
-          >{cancelOption?.text || '取消'}</Button>
+          >{cancelOption?.text || "取消"}</Button>
           <Button
             danger={okOption?.danger}
-            type={okOption?.type || 'primary'}
+            type={okOption?.type || "primary"}
             onClick={onOk}
-          >{okOption?.text || '确定'}</Button>
+          >{okOption?.text || "确定"}</Button>
         </div>
       </div >
     );
-  }
+  };
   return (
     <Drawer
       visible={visible}
@@ -77,6 +77,6 @@ const Index: FC<Props> = (props) => {
       {children}
     </Drawer>
   );
-}
+};
 
 export default Index;

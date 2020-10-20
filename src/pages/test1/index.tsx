@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import Drawer from '@/components/drawer'
-import styles from './index.less';
-import { test } from './service';
+import React, { useState } from "react";
+import Drawer from "@/components/drawer";
+import styles from "./index.less";
+import { test } from "./service";
 
 
 export default () => {
   const [visible, setVisible] = useState(false);
   const send = async () => {
     setVisible(true);
-    const res = await test({ key1: 'value1' });
-    console.log(res, '#send');
-  }
+    const res = await test({ key1: "value1" });
+    console.log(res, "#send");
+  };
 
   return (
     <div>
@@ -21,9 +21,9 @@ export default () => {
         onCancel={setVisible.bind(null, false)}
       >
         1
-        <div style={{ height: '1000px', width: '400px' }}></div>
+        <div style={{ height: "1000px", width: "400px" }}></div>
         2
       </Drawer>
     </div>
   );
-}
+};

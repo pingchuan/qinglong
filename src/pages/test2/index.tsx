@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './index.less';
+import React from "react";
+import styles from "./index.less";
 
 export default () => {
   return (
@@ -7,4 +7,4 @@ export default () => {
       <div className={styles.title}>test2</div>
     </div>
   );
-}
+};

@@ -1,4 +1,4 @@
-import { Effect } from 'dva';
+// import { Effect } from 'dva';
 import { Reducer } from 'redux';
 
 export interface AuthenticateState {
@@ -8,20 +8,20 @@ export interface AuthenticateState {
 
 declare module 'react-redux' {
   interface DefaultRootState {
-    authenticate: AuthenticateState
+    authenticate: AuthenticateState;
   }
 }
 
 export interface IndexModelType {
   namespace: 'authenticate';
   state: AuthenticateState;
-  effects: {
-    query: Effect;
-  };
+  // effects: {
+  //   query: Effect;
+  // };
   reducers: {
     save: Reducer<AuthenticateState>;
   };
-  subscriptions: {};
+  // subscriptions: {};
 }
 
 const IndexModel: IndexModelType = {
@@ -30,10 +30,11 @@ const IndexModel: IndexModelType = {
     userId: '',
     userName: '',
   },
-  effects: {
-    *query({ payload }, { call, put }) {
-    },
-  },
+  // effects: {
+  //   *query({ payload }, { call, put }) {
+  //     console.log(11)
+  //   },
+  // },
   reducers: {
     save(state, action) {
       return {
@@ -42,8 +43,8 @@ const IndexModel: IndexModelType = {
       };
     },
   },
-  subscriptions: {
-  }
-}
+  // subscriptions: {
+  // }
+};
 
 export default IndexModel;

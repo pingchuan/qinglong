@@ -5,7 +5,7 @@ import styles from './index.less';
 
 const { Item: FormItem } = Form;
 
-const Index: FC<{}> = ({ }) => {
+const Index: FC = () => {
   const layout = {
     labelCol: { span: 0 },
     wrapperCol: { span: 24 },

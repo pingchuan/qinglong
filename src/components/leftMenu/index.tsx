@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Menu } from 'antd';
-import { MenuClickEventHandler } from 'antd/node_modules/rc-menu/lib/interface'
+import { MenuClickEventHandler } from 'antd/node_modules/rc-menu/lib/interface';
 import { history } from 'umi';
 import {
   AppstoreOutlined,
@@ -12,15 +12,14 @@ import {
 
 const { SubMenu, Item: MenuItem } = Menu;
 
-const Index: FC<{}> = () => {
-
+const Index: FC = () => {
   /**
    * 菜单点击
    * @param param0 MenuClickEventHandler
    */
   const menuOnClick: MenuClickEventHandler = ({ key }) => {
     history.push(key);
-  }
+  };
 
   return (
     <Menu
@@ -31,13 +30,13 @@ const Index: FC<{}> = () => {
     >
       <MenuItem key="/test1" icon={<PieChartOutlined />}>
         Option 1
-          </MenuItem>
+      </MenuItem>
       <MenuItem key="/test2" icon={<DesktopOutlined />}>
         Option 2
-          </MenuItem>
+      </MenuItem>
       <MenuItem key="3" icon={<ContainerOutlined />}>
         Option 3
-          </MenuItem>
+      </MenuItem>
       <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
         <MenuItem key="5">Option 5</MenuItem>
         <MenuItem key="6">Option 6</MenuItem>
@@ -54,6 +53,6 @@ const Index: FC<{}> = () => {
       </SubMenu>
     </Menu>
   );
-}
+};
 
 export default Index;

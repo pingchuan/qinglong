@@ -47,12 +47,7 @@ const Index: FC<Props> = (props) => {
       >
         <div className={styles.footerExtend}>{footerExtend}</div>
         <div>
-          <Button
-            danger={cancelOption?.danger}
-            type={cancelOption?.type}
-            className={styles.cancelBt}
-            onClick={onCancel}
-          >{cancelOption?.text || "取消"}</Button>
+          <Button danger={cancelOption?.danger} type={cancelOption?.type} className={styles.cancelBt} onClick={onCancel}          >{cancelOption?.text || "取消"}</Button>
           <Button
             danger={okOption?.danger}
             type={okOption?.type || "primary"}

@@ -12,7 +12,11 @@
   height          : 100%;
   box-sizing      : border-box;
   background-color: @green;
-  overflow        : auto;
+  overflow        : hidden;
+
+  &:hover {
+    overflow: auto;
+  }
 }
 
 .content {

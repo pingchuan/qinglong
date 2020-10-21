@@ -12,5 +12,6 @@ export default defineConfig({
   links: [
     { rel: 'icon', href: '/icon.jpg' },
   ],
+  title: 'qinglong',
   dynamicImport: {},
 });

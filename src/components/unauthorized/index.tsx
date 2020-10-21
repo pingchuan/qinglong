@@ -1,7 +1,6 @@
-import React from "react";
-import { Empty } from "antd";
-import styles from "./index.less";
-
+import React from 'react';
+import { Empty } from 'antd';
+import styles from './index.less';
 
 const Index = () => {
   return (

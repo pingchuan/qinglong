@@ -1,5 +1,5 @@
-import request from "@/utils/request";
-import { stringify } from "qs";
+import request from '@/utils/request';
+import { stringify } from 'qs';
 
 export function test(params?: { key1?: string; key2?: string }) {
   return request(

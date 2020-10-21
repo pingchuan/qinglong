@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import styles from "./index.less";
+import React, { FC } from 'react';
+import styles from './index.less';
 // import LeftMenu from '@/components/leftMenu';
 
 const Index: FC = props => {

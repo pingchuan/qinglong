@@ -13,5 +13,7 @@ export default defineConfig({
     { rel: 'icon', href: '/icon.jpg' },
   ],
   title: 'qinglong',
-  dynamicImport: {},
+  dynamicImport: {
+    loading: '@/components/globalLoading',
+  },
 });

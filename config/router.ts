@@ -8,6 +8,7 @@ const Index = [
       { path: '/test1', component: 'testpages/test1' },
       { path: '/test2', component: 'testpages/test2' },
       { path: '/3', component: 'publicpages/inDevelopment' },
+      { path: '/userList', component: 'backpages/userList' },
       { path: '/*', component: 'publicpages/404' },
     ],
   },

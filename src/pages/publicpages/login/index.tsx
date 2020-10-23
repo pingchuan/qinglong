@@ -95,6 +95,7 @@ const Index: FC = () => {
                 <Input.Password
                   prefix={<UnlockOutlined className={styles.icon} />}
                   placeholder="请输入密码"
+                  onPaste={e => e.preventDefault()}
                 />
               </FormItem>
 
@@ -141,7 +142,10 @@ const Index: FC = () => {
                 name="password"
                 rules={[{ required: true, message: '该字段必填' }]}
               >
-                <Input.Password placeholder="请输入密码" />
+                <Input.Password
+                  placeholder="请输入密码"
+                  onPaste={e => e.preventDefault()}
+                />
               </FormItem>
 
               <FormItem

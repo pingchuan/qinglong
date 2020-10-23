@@ -3,6 +3,7 @@ message.config({ maxCount: 1 });
 
 interface ExtendOptions extends RequestInit {
   Accept?: 'json' | 'form';
+  responseType?: 'json' | 'blob';
 }
 
 interface IndexType {
@@ -15,19 +16,19 @@ enum ContentType {
 }
 
 const index: IndexType = async function index(url, extendOptions = {}) {
-  const { Accept, ...otherExtendOptions } = extendOptions;
+  const { Accept, responseType, ...otherExtendOptions } = extendOptions;
   const headers = {
     Accept: Accept === 'form' ? ContentType.form : ContentType.json,
-    method: otherExtendOptions.method || 'GET',
     ...(extendOptions?.headers || {}),
   };
   const options = {
     headers,
+    method: otherExtendOptions.method || 'GET',
     ...otherExtendOptions,
   };
   const response = await fetch(url, options);
   statusValidate(response);
-  return response.json();
+  return responseType === 'blob' ? response.blob() : response.json();
 };
 
 function statusValidate(response: Response) {

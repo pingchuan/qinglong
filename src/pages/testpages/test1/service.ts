@@ -8,3 +8,9 @@ export function test(params?: { key1?: string; key2?: string }) {
     )}`,
   );
 }
+
+export function getCheckCode() {
+  return request('http://localhost:3000/test1/c', {
+    Accept: 'form',
+  });
+}

@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import Drawer from '@/components/drawer';
 import FixedBack from '@/components/fixedBack';
 import styles from './index.less';
-import { test } from './service';
+import { test, getCheckCode } from './service';
 
 export default () => {
   const [visible, setVisible] = useState(false);
-  const sendRequest = async () => {
+  const [imageSrc, setImageSrc] = useState('');
+  const sendRequestAsync = async () => {
     const res = await test({ key1: 'value1' });
     console.log(res, '#send');
+  };
+  const getCheckCodeAsync = async () => {
+    const { data } = await getCheckCode();
+    setImageSrc(data as string);
   };
   const openDrawer = () => {
     setVisible(true);
@@ -16,8 +21,10 @@ export default () => {
 
   return (
     <div>
-      <div onClick={sendRequest}>send request</div>
+      <div onClick={sendRequestAsync}>send request</div>
       <div onClick={openDrawer}>open drawer</div>
+      <div onClick={getCheckCodeAsync}>getCheckCode</div>
+      <img src={imageSrc} />
       <div className={styles.content}>content</div>
       <Drawer
         title="添加问题"

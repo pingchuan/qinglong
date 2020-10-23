@@ -1,6 +1,3 @@
-import { message } from 'antd';
-message.config({ maxCount: 1 });
-
 interface ExtendOptions extends RequestInit {
   Accept?: 'json' | 'form';
   responseType?: 'json' | 'blob';
@@ -26,9 +23,14 @@ const index: IndexType = async function index(url, extendOptions = {}) {
     method: otherExtendOptions.method || 'GET',
     ...otherExtendOptions,
   };
-  const response = await fetch(url, options);
-  statusValidate(response);
-  return responseType === 'blob' ? response.blob() : response.json();
+  try {
+    const response = await fetch(url, options);
+    statusValidate(response);
+    return responseType === 'blob' ? response.blob() : response.json();
+  } catch (e) {
+    Promise.reject('服务器网络异常');
+    return {};
+  }
 };
 
 function statusValidate(response: Response) {

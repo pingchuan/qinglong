@@ -7,6 +7,8 @@ import zhCN from 'antd/es/locale/zh_CN';
 import { AuthenticateState } from '@/models/authenticate';
 import LeftRightLayout from './leftRightLayout';
 
+message.config({ maxCount: 1 });
+
 interface IndexPropsType {
   dispatch: Dispatch;
   authenticate: AuthenticateState;

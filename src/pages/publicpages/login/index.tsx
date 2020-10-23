@@ -26,18 +26,18 @@ const Index: FC = () => {
             <FormItem
               label=""
               name="username"
-              rules={[{ required: true, message: '用户名必填' }]}
+              rules={[{ required: true, message: '该字段必填' }]}
             >
               <Input
                 prefix={<UserOutlined className={styles.icon} />}
-                placeholder="请输入用户名"
+                placeholder="请输入邮箱"
               />
             </FormItem>
 
             <FormItem
               label=""
               name="password"
-              rules={[{ required: true, message: '密码必填' }]}
+              rules={[{ required: true, message: '该字段必填' }]}
             >
               <Input.Password
                 prefix={<UnlockOutlined className={styles.icon} />}
@@ -51,6 +51,7 @@ const Index: FC = () => {
               </Button>
             </FormItem>
           </Form>
+          <div className={styles.registered}>注册</div>
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ export default () => {
       <Drawer
         title="添加问题"
         visible={visible}
-        onCancel={setVisible.bind(null, false)}
+        onCancel={() => setVisible(false)}
       >
         1<div style={{ height: '1000px', width: '400px' }}></div>2
       </Drawer>

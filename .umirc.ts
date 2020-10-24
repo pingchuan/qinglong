@@ -1,9 +1,10 @@
 import { defineConfig } from 'umi';
+import path from 'path'
 import routes from './config/router';
 
 export default defineConfig({
   alias: {
-    '@': '/',
+    'config': path.resolve(__dirname, './config/'),
   },
   nodeModulesTransform: {
     type: 'none',

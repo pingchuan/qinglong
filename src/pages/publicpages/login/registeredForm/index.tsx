@@ -35,6 +35,7 @@ const Index: FC<Props> = ({ switchTab }) => {
   const onSubmit = async (values: RegisteredSubmitValues) => {
     setLoading(true);
     const { user } = await postRegistered(values);
+    setLoading(false);
     if (user) {
       message.success('注册成功');
       switchTab(TabEnum.login, {
@@ -42,7 +43,6 @@ const Index: FC<Props> = ({ switchTab }) => {
         [FormName.password]: values[FormName.password],
       });
     }
-    setLoading(false);
   };
 
   useEffect(() => {

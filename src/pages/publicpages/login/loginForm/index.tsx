@@ -1,9 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
+import { connect } from 'dva';
+import { history } from 'umi';
+import { Dispatch } from 'redux';
 import { Form, Input, Button } from 'antd';
 import { UnlockOutlined, UserOutlined } from '@ant-design/icons';
 import { rulesLength } from '@/utils/validators';
 import { LoginSubmitValues } from '../type';
-import { getCheckCode } from '../service';
+import { getCheckCode, postLogin } from '../service';
 import { FormName } from '../constant';
 import styles from './index.less';
 
@@ -11,9 +14,10 @@ const { Item: FormItem } = Form;
 
 interface Props {
   initialValues: LoginSubmitValues;
+  dispatch: Dispatch;
 }
 
-const Index: FC<Props> = ({ initialValues }) => {
+const Index: FC<Props> = ({ initialValues, dispatch }) => {
   const [checkCodeSrc, setCheckCodeSrc] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -29,9 +33,19 @@ const Index: FC<Props> = ({ initialValues }) => {
   };
 
   // 提交登录
-  const onSubmit = (values: LoginSubmitValues) => {
-    console.log(values);
+  const onSubmit = async (values: LoginSubmitValues) => {
     setLoading(true);
+    const { user } = await postLogin(values);
+    if (user) {
+      dispatch({
+        type: 'authenticate/save',
+        payload: { user },
+      });
+      history.push('/');
+    } else {
+      getCheckCodeAsync();
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -47,12 +61,12 @@ const Index: FC<Props> = ({ initialValues }) => {
       initialValues={initialValues}
     >
       <FormItem
-        name={FormName.username}
+        name={FormName.mail}
         rules={rulesLength({ max: 32, required: true })}
       >
         <Input
           prefix={<UserOutlined className={styles.icon} />}
-          placeholder="请输入用户名/邮箱"
+          placeholder="请输入邮箱"
         />
       </FormItem>
       <FormItem
@@ -86,4 +100,4 @@ const Index: FC<Props> = ({ initialValues }) => {
   );
 };
 
-export default Index;
+export default connect()(Index);

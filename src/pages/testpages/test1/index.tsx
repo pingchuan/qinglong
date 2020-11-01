@@ -8,7 +8,7 @@ export default () => {
   const [visible, setVisible] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
   const sendRequestAsync = async () => {
-    const res = await test({ key1: 'value1' });
+    const res = await test();
     console.log(res, '#send');
   };
   const getCheckCodeAsync = async () => {

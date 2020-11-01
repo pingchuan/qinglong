@@ -9,7 +9,11 @@ export interface RegisteredSubmitValues {
 }
 
 export interface LoginSubmitValues {
-  [FormName.username]: string;
+  [FormName.mail]: string;
   [FormName.password]: string;
   [FormName.checkCode]?: string;
+}
+
+export interface MailCheckCodeSubmitValues {
+  [FormName.mail]: string;
 }

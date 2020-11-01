@@ -1,9 +1,20 @@
 // import { Effect } from 'dva';
 import { Reducer } from 'redux';
 
+export interface UserInfo {
+  id: string;
+  username: string;
+  mail: string;
+  sex?: 'man' | 'woman';
+  age?: number;
+  cellPhone?: string;
+  phone?: string;
+  image?: string;
+  description?: string;
+}
+
 export interface AuthenticateState {
-  userId: string;
-  userName: string;
+  user: UserInfo;
 }
 
 declare module 'react-redux' {
@@ -24,22 +35,29 @@ export interface IndexModelType {
   // subscriptions: {};
 }
 
+export const initState = (): AuthenticateState => {
+  return {
+    user: {
+      id: '',
+      username: '',
+      mail: '',
+    },
+  };
+};
+
 const IndexModel: IndexModelType = {
   namespace: 'authenticate',
-  state: {
-    userId: '',
-    userName: '',
-  },
+  state: initState(),
   // effects: {
   //   *query({ payload }, { call, put }) {
-  //     console.log(11)
+  //     console.log(11);
   //   },
   // },
   reducers: {
-    save(state, action) {
+    save(state, { payload }) {
       return {
         ...state,
-        ...action.payload,
+        ...payload,
       };
     },
   },

@@ -1,3 +1,5 @@
+import { apiIp } from 'config/public';
+
 interface ExtendOptions extends RequestInit {
   Accept?: 'json' | 'form';
   responseType?: 'json' | 'blob';
@@ -6,7 +8,9 @@ interface ExtendOptions extends RequestInit {
 }
 
 interface IndexType {
-  (url: RequestInfo, options?: ExtendOptions): Promise<Record<string, unknown>>;
+  (apiUrl: RequestInfo, options?: ExtendOptions): Promise<
+    Record<string, unknown>
+  >;
 }
 
 enum AcceptType {
@@ -14,7 +18,13 @@ enum AcceptType {
   form = 'application/x-www-form-urlencoded;charset=UTF-8',
 }
 
-const index: IndexType = async function index(url, extendOptions = {}) {
+type CredentialsType = 'include' | 'omit' | 'same-origin' | undefined;
+
+const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
+  let url = apiUrl;
+  if (typeof apiUrl === 'string' && !apiUrl.startsWith('http')) {
+    url = `${apiIp}${apiUrl}`;
+  }
   const {
     Accept,
     responseType,
@@ -31,6 +41,7 @@ const index: IndexType = async function index(url, extendOptions = {}) {
       headers,
       method: otherExtendOptions.method || 'GET',
       ...otherExtendOptions,
+      credentials: 'include' as CredentialsType,
     },
     otherExtendOptions.body
       ? { body: JSON.stringify(otherExtendOptions.body) }
@@ -44,6 +55,7 @@ const index: IndexType = async function index(url, extendOptions = {}) {
       return {};
     }
   } catch (e) {
+    console.log(e);
     Promise.reject('服务器网络异常');
     return {};
   }
@@ -51,7 +63,11 @@ const index: IndexType = async function index(url, extendOptions = {}) {
 
 function statusValidate(response: Response): boolean {
   const statusString = String(response.status);
-  if (statusString.startsWith('4')) {
+  if (statusString === '401') {
+    window.location.href = '/login';
+    // Promise.reject('用户认证失败');
+    return false;
+  } else if (statusString.startsWith('4')) {
     Promise.reject('服务器网络异常');
     return false;
   } else if (statusString.startsWith('5')) {

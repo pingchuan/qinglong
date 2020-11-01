@@ -15,5 +15,6 @@ const Index = [
 ];
 
 export const fullScreenLayoutPath = ['/login'];
+export const noAuthenticatePath = ['/login'];
 
 export default Index;

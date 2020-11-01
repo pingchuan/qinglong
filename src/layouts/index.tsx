@@ -4,11 +4,11 @@ import { connect } from 'dva';
 import { Location } from 'history';
 import { Dispatch } from 'redux';
 import zhCN from 'antd/es/locale/zh_CN';
-// import Unauthorized from '@/components/unauthorized';
+import Unauthorized from '@/components/unauthorized';
 import { AuthenticateState } from '@/models/authenticate';
 import LeftRightLayout from './leftRightLayout';
 import FullScreenLayout from './fullScreenLayout';
-import { fullScreenLayoutPath } from 'config/router';
+import { fullScreenLayoutPath, noAuthenticatePath } from 'config/router';
 
 message.config({ maxCount: 1 });
 
@@ -20,11 +20,12 @@ interface IndexPropsType {
 
 const Index: FC<IndexPropsType> = props => {
   const { authenticate, location } = props;
-  console.log(authenticate, props);
-  // return (
-  //   <Unauthorized />
-  // );
-  if (fullScreenLayoutPath.includes(location.pathname)) {
+  if (
+    (!authenticate.user?.id || !authenticate.user?.mail) &&
+    !noAuthenticatePath.includes(location.pathname)
+  ) {
+    return <Unauthorized />;
+  } else if (fullScreenLayoutPath.includes(location.pathname)) {
     return <FullScreenLayout {...props} />;
   } else {
     return <LeftRightLayout {...props} />;

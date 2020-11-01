@@ -1,4 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
+import { useDispatch } from 'umi';
+import { initState } from '@/models/authenticate';
 import LoginForm from './loginForm';
 import RegisteredForm from './registeredForm';
 import { LoginSubmitValues } from './type';
@@ -19,12 +21,13 @@ export interface SwithTab {
 
 const getLoginInitFormValues = () => {
   return {
-    [FormName.username]: '',
+    [FormName.mail]: '',
     [FormName.password]: '',
   };
 };
 
 const Index: FC = () => {
+  const dispatch = useDispatch();
   const [tab, setTab] = useState(TabEnum.login);
   const [loginInitFormValues, setLoginInitFormValues] = useState<
     LoginSubmitValues
@@ -41,6 +44,10 @@ const Index: FC = () => {
 
   useEffect(() => {
     setLoginInitFormValues(getLoginInitFormValues());
+    dispatch({
+      type: 'authenticate/save',
+      payload: initState(),
+    });
   }, []);
   return (
     <div className={styles.loginBg}>

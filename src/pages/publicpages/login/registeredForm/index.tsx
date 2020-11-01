@@ -4,7 +4,7 @@ import { validatorLength, rulesLength } from '@/utils/validators';
 import { SwithTab, TabEnum } from '../index';
 import { FormName } from '../constant';
 import { RegisteredSubmitValues } from '../type';
-import { postRegistered } from '../service';
+import { postRegistered, getMailCheckCode } from '../service';
 import styles from './index.less';
 
 const { Item: FormItem } = Form;
@@ -18,6 +18,8 @@ const Index: FC<Props> = ({ switchTab }) => {
   const [mailCheckCodeTime, setMailCheckCodeTime] = useState(0);
   const [upDateTimer, setUpDateTimer] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [checkCodeLoading, setCheckCodeLoading] = useState(false);
+  const [form] = Form.useForm();
 
   const layout = {
     labelCol: { span: 0 },
@@ -26,21 +28,34 @@ const Index: FC<Props> = ({ switchTab }) => {
 
   // 获取邮箱验证码
   const getMailCheckCodeAsync = async () => {
-    setMailCheckCodeTime(30);
-    localStorage.setItem('mailTime', String(30));
-    setUpDateTimer(!upDateTimer);
+    await form.validateFields([FormName.mail]);
+    setCheckCodeLoading(true);
+    const { isSuccess } = await getMailCheckCode({
+      mail: form.getFieldValue(FormName.mail),
+    });
+    setCheckCodeLoading(false);
+    if (isSuccess) {
+      setMailCheckCodeTime(30);
+      localStorage.setItem('mailTime', String(30));
+      setUpDateTimer(!upDateTimer);
+    }
   };
 
   // 提交注册
   const onSubmit = async (values: RegisteredSubmitValues) => {
     setLoading(true);
-    const { user } = await postRegistered(values);
-    if (user) {
+    const { id } = await postRegistered(values);
+    if (id) {
       message.success('注册成功');
-      switchTab(TabEnum.login, {
-        [FormName.username]: values[FormName.username],
-        [FormName.password]: values[FormName.password],
-      });
+      clearInterval(mailTimer);
+      localStorage.setItem('mailTime', '0');
+      // 利用事件循环原理清空定时器后再跳转
+      setTimeout(() => {
+        switchTab(TabEnum.login, {
+          [FormName.mail]: values[FormName.mail],
+          [FormName.password]: values[FormName.password],
+        });
+      }, 0);
     }
     setLoading(false);
   };
@@ -65,7 +80,13 @@ const Index: FC<Props> = ({ switchTab }) => {
   }, [upDateTimer]);
 
   return (
-    <Form {...layout} className={styles.form} name="basic" onFinish={onSubmit}>
+    <Form
+      form={form}
+      {...layout}
+      className={styles.form}
+      name="basic"
+      onFinish={onSubmit}
+    >
       <FormItem
         name={FormName.username}
         rules={rulesLength({ max: 32, required: true })}
@@ -129,6 +150,7 @@ const Index: FC<Props> = ({ switchTab }) => {
             type="link"
             className={styles.checkCodeButton}
             onClick={getMailCheckCodeAsync}
+            loading={checkCodeLoading}
           >
             获取邮箱验证码
           </Button>

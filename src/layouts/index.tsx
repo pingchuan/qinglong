@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from 'react';
 import { ConfigProvider, message } from 'antd';
+import { history } from 'umi';
 import { connect } from 'dva';
 import { Location } from 'history';
 import { Dispatch } from 'redux';
 import zhCN from 'antd/es/locale/zh_CN';
-import Unauthorized from '@/components/unauthorized';
-import { AuthenticateState } from '@/models/authenticate';
+import { getCookie } from '@/utils/public';
 import LeftRightLayout from './leftRightLayout';
 import FullScreenLayout from './fullScreenLayout';
 import { fullScreenLayoutPath, noAuthenticatePath } from 'config/router';
@@ -15,17 +15,25 @@ message.config({ maxCount: 1 });
 interface IndexPropsType {
   dispatch: Dispatch;
   location: Location;
-  authenticate: AuthenticateState;
 }
 
 const Index: FC<IndexPropsType> = props => {
-  const { authenticate, location } = props;
-  if (
-    (!authenticate.user?.id || !authenticate.user?.mail) &&
-    !noAuthenticatePath.includes(location.pathname)
-  ) {
-    return <Unauthorized />;
-  } else if (fullScreenLayoutPath.includes(location.pathname)) {
+  const { location, dispatch } = props;
+  useEffect(() => {
+    const user = JSON.parse(getCookie('user') || '{}');
+    if (
+      (!user?.id || !user?.mail) &&
+      !noAuthenticatePath.includes(location.pathname)
+    ) {
+      history.push('/login');
+    } else {
+      dispatch({
+        type: 'authenticate/save',
+        payload: user,
+      });
+    }
+  });
+  if (fullScreenLayoutPath.includes(location.pathname)) {
     return <FullScreenLayout {...props} />;
   } else {
     return <LeftRightLayout {...props} />;
@@ -53,4 +61,4 @@ const IndexWrapper: FC<IndexPropsType> = props => {
   );
 };
 
-export default connect(({ authenticate }) => ({ authenticate }))(IndexWrapper);
+export default connect()(IndexWrapper);

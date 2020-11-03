@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { Form, Input, Button } from 'antd';
 import { UnlockOutlined, UserOutlined } from '@ant-design/icons';
 import { rulesLength } from '@/utils/validators';
+import { setCookie } from '@/utils/public';
 import { LoginSubmitValues } from '../type';
 import { getCheckCode, postLogin } from '../service';
 import { FormName } from '../constant';
@@ -17,7 +18,7 @@ interface Props {
   dispatch: Dispatch;
 }
 
-const Index: FC<Props> = ({ initialValues, dispatch }) => {
+const Index: FC<Props> = ({ initialValues }) => {
   const [checkCodeSrc, setCheckCodeSrc] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -37,10 +38,7 @@ const Index: FC<Props> = ({ initialValues, dispatch }) => {
     setLoading(true);
     const { user } = await postLogin(values);
     if (user) {
-      dispatch({
-        type: 'authenticate/save',
-        payload: { user },
-      });
+      setCookie('user', JSON.stringify(user));
       history.push('/');
     } else {
       getCheckCodeAsync();

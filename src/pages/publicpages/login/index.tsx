@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
-import { useDispatch } from 'umi';
-import { initState } from '@/models/authenticate';
+import { history } from 'umi';
+import { getCookie } from '@/utils/public';
 import LoginForm from './loginForm';
 import RegisteredForm from './registeredForm';
 import { LoginSubmitValues } from './type';
@@ -10,6 +10,7 @@ import styles from './index.less';
 export enum TabEnum {
   login = 'login',
   registered = 'registered',
+  loding = 'loding',
 }
 
 export interface SwithTab {
@@ -27,8 +28,7 @@ const getLoginInitFormValues = () => {
 };
 
 const Index: FC = () => {
-  const dispatch = useDispatch();
-  const [tab, setTab] = useState(TabEnum.login);
+  const [tab, setTab] = useState(TabEnum.loding);
   const [loginInitFormValues, setLoginInitFormValues] = useState<
     LoginSubmitValues
   >(getLoginInitFormValues());
@@ -43,11 +43,13 @@ const Index: FC = () => {
   };
 
   useEffect(() => {
-    setLoginInitFormValues(getLoginInitFormValues());
-    dispatch({
-      type: 'authenticate/save',
-      payload: initState(),
-    });
+    const user = JSON.parse(getCookie('user') || '{}');
+    if (user?.id || user?.mail) {
+      history.push('/');
+    } else {
+      setTab(TabEnum.login);
+      setLoginInitFormValues(getLoginInitFormValues());
+    }
   }, []);
   return (
     <div className={styles.loginBg}>

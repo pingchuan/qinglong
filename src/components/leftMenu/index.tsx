@@ -31,8 +31,8 @@ const Index: FC = () => {
       <MenuItem key="/test1" icon={<PieChartOutlined />}>
         Option 1
       </MenuItem>
-      <MenuItem key="/test2" icon={<DesktopOutlined />}>
-        Option 2
+      <MenuItem key="/userList" icon={<DesktopOutlined />}>
+        用户列表
       </MenuItem>
       <MenuItem key="3" icon={<ContainerOutlined />}>
         Option 3

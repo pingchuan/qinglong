@@ -85,7 +85,7 @@ const Index: FC = () => {
     cellPhone: '15847986438',
     phone: '023-78226911',
     mail: '10571022282@qq.com',
-    headImage: 'https://avatars2.githubusercontent.com/u/25975368?s=460&v=4',
+    headImage: '/icon.jpg',
     description:
       index % 2 === 0
         ? '按照 React 的规范，所有的数组组件必须绑定 key。在 Table 中，dataSource 和 columns 里的数据值都需要指定 key 值。对于 dataSource 默认将每列数据的 key 属性作为唯一的标识。'
@@ -93,18 +93,20 @@ const Index: FC = () => {
   }));
 
   return (
-    <Table<UserInfo>
-      rowKey="id"
-      bordered={true}
-      columns={columns}
-      dataSource={data}
-      expandable={{
-        expandedRowRender: record => (
-          <p className={styles.description}>描述：{record.description}</p>
-        ),
-        rowExpandable: record => Boolean(record.description),
-      }}
-    />
+    <div className={styles.userList}>
+      <Table<UserInfo>
+        rowKey="id"
+        bordered={true}
+        columns={columns}
+        dataSource={data}
+        expandable={{
+          expandedRowRender: record => (
+            <p className={styles.description}>描述：{record.description}</p>
+          ),
+          rowExpandable: record => Boolean(record.description),
+        }}
+      />
+    </div>
   );
 };
 

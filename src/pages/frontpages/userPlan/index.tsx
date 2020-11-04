@@ -12,7 +12,7 @@ const Index = () => {
             values={
               {
                 id: 11,
-                name: '罩杯尺码表测试',
+                name: '任务测试',
                 beginDate: '2020-11-22',
                 endDate: '2020-12-09',
                 vlaues: [

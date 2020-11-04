@@ -8,6 +8,7 @@ import {
   DesktopOutlined,
   ContainerOutlined,
   MailOutlined,
+  ProfileOutlined,
 } from '@ant-design/icons';
 
 const { SubMenu, Item: MenuItem } = Menu;
@@ -34,16 +35,19 @@ const Index: FC = () => {
       <MenuItem key="/userList" icon={<DesktopOutlined />}>
         用户列表
       </MenuItem>
-      <MenuItem key="3" icon={<ContainerOutlined />}>
-        Option 3
+      <MenuItem key="/userPlan" icon={<ProfileOutlined />}>
+        我的计划
       </MenuItem>
-      <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
+      <MenuItem key="3" icon={<ContainerOutlined />}>
+        404页面
+      </MenuItem>
+      <SubMenu key="sub1" icon={<MailOutlined />} title="测试一">
         <MenuItem key="5">Option 5</MenuItem>
         <MenuItem key="6">Option 6</MenuItem>
         <MenuItem key="7">Option 7</MenuItem>
         <MenuItem key="8">Option 8</MenuItem>
       </SubMenu>
-      <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
+      <SubMenu key="sub2" icon={<AppstoreOutlined />} title="测试二">
         <MenuItem key="9">Option 9</MenuItem>
         <MenuItem key="10">Option 10</MenuItem>
         <SubMenu key="sub3" title="Submenu">

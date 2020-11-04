@@ -7,14 +7,17 @@ const Index = [
       { path: '/login', component: 'publicpages/login' },
       { path: '/test1', component: 'testpages/test1' },
       { path: '/test2', component: 'testpages/test2' },
-      { path: '/3', component: 'publicpages/inDevelopment' },
+      { path: '/3', component: 'publicpages/404' },
       { path: '/userList', component: 'backpages/userList' },
-      { path: '/*', component: 'publicpages/404' },
+      { path: '/userPlan', component: 'frontpages/userPlan' },
+      { path: '/*', component: 'publicpages/inDevelopment' },
     ],
   },
 ];
 
-export const fullScreenLayoutPath = ['/login'];
-export const noAuthenticatePath = ['/login'];
+const tempPath = ['/test2'];
+
+export const fullScreenLayoutPath = ['/login'].concat(tempPath);
+export const noAuthenticatePath = ['/login'].concat(tempPath);
 
 export default Index;

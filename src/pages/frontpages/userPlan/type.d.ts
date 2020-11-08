@@ -1,16 +1,17 @@
 import { EnumPhiz } from './constant';
 
-export interface PlanDateValues {
-  id: number | string;
-  date: string;
+export interface PlanDayValues {
+  time: string;
   description: string;
   phiz: EnumPhiz;
+  id?: number;
+  planId?: number;
 }
 
 export interface PlanValues {
   name: string;
-  id: number | string;
-  beginDate: string;
-  endDate: string;
-  vlaues: PlanDateValues[];
+  startTime: number;
+  endTime: number;
+  id?: number;
+  values?: PlanDayValues[];
 }

@@ -90,7 +90,13 @@ const Index: FC<Props> = ({ initialValues }) => {
         </div>
       </FormItem>
       <FormItem>
-        <Button type="primary" htmlType="submit" block loading={loading}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          block
+          loading={loading}
+          className={styles.button}
+        >
           立即登录
         </Button>
       </FormItem>

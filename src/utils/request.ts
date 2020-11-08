@@ -1,16 +1,17 @@
+import { message } from 'antd';
 import { apiIp } from 'config/public';
+import { clearCookie } from '@/utils/public';
 
 interface ExtendOptions extends RequestInit {
   Accept?: 'json' | 'form';
   responseType?: 'json' | 'blob';
+  hasTip?: boolean;
   ContentType?: string;
   body?: any;
 }
 
 interface IndexType {
-  (apiUrl: RequestInfo, options?: ExtendOptions): Promise<
-    Record<string, unknown>
-  >;
+  (apiUrl: RequestInfo, options?: ExtendOptions): Promise<any>;
 }
 
 enum AcceptType {
@@ -29,6 +30,7 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
     Accept,
     responseType,
     ContentType,
+    hasTip,
     ...otherExtendOptions
   } = extendOptions;
   const headers = {
@@ -50,12 +52,12 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
   try {
     const response = await fetch(url, options);
     if (statusValidate(response)) {
+      hasTip && message.success('操作成功');
       return responseType === 'blob' ? response.blob() : response.json();
     } else {
       return {};
     }
   } catch (e) {
-    console.log(e);
     Promise.reject('服务器网络异常');
     return {};
   }
@@ -64,8 +66,8 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
 function statusValidate(response: Response): boolean {
   const statusString = String(response.status);
   if (statusString === '401') {
+    clearCookie('user');
     window.location.href = '/login';
-    // Promise.reject('用户认证失败');
     return false;
   } else if (statusString.startsWith('4')) {
     Promise.reject('服务器网络异常');

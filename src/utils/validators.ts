@@ -12,10 +12,10 @@ export const validatorLength = (
   callback?: () => Promise<void>,
 ): Promise<void> => {
   if (value && min && value.length < min) {
-    return Promise.reject(`最小长度为${min}位`);
+    return Promise.reject(`最少不低于${min}个字符`);
   }
   if (value && max && value.length > max) {
-    return Promise.reject(`最大长度为${max}位`);
+    return Promise.reject(`最多不超过${max}个字符`);
   }
   if (typeof callback === 'function') {
     return callback();

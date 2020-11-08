@@ -9,3 +9,10 @@ export enum EnumPhiz {
   C = 'C',
   D = 'D',
 }
+
+export enum FormName {
+  name = 'name',
+  timeRange = 'timeRange',
+  startTime = 'startTime',
+  endTime = 'endTime',
+}

@@ -4,9 +4,9 @@
  * @param value
  */
 export const setCookie = (key: string, value: string) => {
-  const d = new Date();
-  d.setTime(d.getTime() + 8 * 60 * 60 * 1000);
-  const expires = 'expires=' + d.toUTCString();
+  const date = new Date();
+  date.setTime(date.getTime() + 8 * 60 * 60 * 1000);
+  const expires = 'expires=' + date.toUTCString();
   document.cookie = key + '=' + btoa(value) + '; ' + expires;
 };
 
@@ -24,4 +24,14 @@ export const getCookie = (key: string) => {
     }
   }
   return '';
+};
+
+/**
+ * 清除cookie
+ * @param key
+ */
+export const clearCookie = (key: string, value?: string) => {
+  const date = new Date();
+  const expires = 'expires=' + date.toUTCString();
+  document.cookie = key + '=' + btoa(value || '{}') + '; ' + expires;
 };

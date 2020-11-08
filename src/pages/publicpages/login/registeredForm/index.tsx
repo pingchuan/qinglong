@@ -160,7 +160,13 @@ const Index: FC<Props> = ({ switchTab }) => {
         )}
       </FormItem>
       <FormItem>
-        <Button type="primary" htmlType="submit" block loading={loading}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          block
+          loading={loading}
+          className={styles.button}
+        >
           立即注册
         </Button>
       </FormItem>

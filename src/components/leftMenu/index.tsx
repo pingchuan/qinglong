@@ -5,10 +5,11 @@ import { history } from 'umi';
 import {
   AppstoreOutlined,
   PieChartOutlined,
-  DesktopOutlined,
   ContainerOutlined,
   MailOutlined,
+  BulbOutlined,
   ProfileOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 
 const { SubMenu, Item: MenuItem } = Menu;
@@ -24,21 +25,21 @@ const Index: FC = () => {
 
   return (
     <Menu
-      defaultSelectedKeys={['1']}
+      defaultSelectedKeys={[history.location.pathname]}
       defaultOpenKeys={['sub1']}
       mode="inline"
       onClick={menuOnClick}
     >
-      <MenuItem key="/test1" icon={<PieChartOutlined />}>
-        Option 1
-      </MenuItem>
-      <MenuItem key="/userList" icon={<DesktopOutlined />}>
-        用户列表
-      </MenuItem>
       <MenuItem key="/userPlan" icon={<ProfileOutlined />}>
         我的计划
       </MenuItem>
-      <MenuItem key="3" icon={<ContainerOutlined />}>
+      <MenuItem key="/userList" icon={<UserOutlined />}>
+        用户列表
+      </MenuItem>
+      <MenuItem key="/other" icon={<BulbOutlined />}>
+        其他功能
+      </MenuItem>
+      {/* <MenuItem key="3" icon={<ContainerOutlined />}>
         404页面
       </MenuItem>
       <SubMenu key="sub1" icon={<MailOutlined />} title="测试一">
@@ -54,7 +55,7 @@ const Index: FC = () => {
           <MenuItem key="11">Option 11</MenuItem>
           <MenuItem key="12">Option 12</MenuItem>
         </SubMenu>
-      </SubMenu>
+      </SubMenu> */}
     </Menu>
   );
 };

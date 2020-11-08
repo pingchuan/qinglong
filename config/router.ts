@@ -3,7 +3,7 @@ const Index = [
     path: '/',
     component: '@/layouts/index',
     routes: [
-      { path: '/', redirect: '/test1' },
+      { path: '/', redirect: '/userPlan' },
       { path: '/login', component: 'publicpages/login' },
       { path: '/test1', component: 'testpages/test1' },
       { path: '/test2', component: 'testpages/test2' },
@@ -15,7 +15,7 @@ const Index = [
   },
 ];
 
-const tempPath = ['/test2'];
+const tempPath = ['/test2', '/test2'];
 
 export const fullScreenLayoutPath = ['/login'].concat(tempPath);
 export const noAuthenticatePath = ['/login'].concat(tempPath);

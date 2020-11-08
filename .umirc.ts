@@ -17,4 +17,7 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/components/globalLoading',
   },
+  theme: {
+    "primary-color": "#16a085",
+  },
 });

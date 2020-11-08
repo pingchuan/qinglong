@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from 'react';
-import { Button } from 'antd';
+import { Button, Empty } from 'antd';
 import { connect } from 'umi';
 import { Dispatch } from 'redux';
 import PlanItem from './planItem';
@@ -38,9 +38,13 @@ const Index: FC<Props> = props => {
             新增任务
           </Button>
         </div>
-        {list.map((item, index) => {
-          return <PlanItem values={item} key={index} />;
-        })}
+        {list.length ? (
+          list.map((item, index) => {
+            return <PlanItem values={item} key={index} />;
+          })
+        ) : (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无任务" />
+        )}
       </div>
       <PlanDraWer
         visible={visible}

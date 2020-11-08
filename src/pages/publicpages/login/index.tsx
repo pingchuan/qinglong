@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { history } from 'umi';
 import { getCookie } from '@/utils/public';
+import emptyImageSrc from '@/assets/images/qinglong.png';
 import LoginForm from './loginForm';
 import RegisteredForm from './registeredForm';
 import { LoginSubmitValues } from './type';
@@ -61,6 +62,9 @@ const Index: FC = () => {
         }
       >
         <div className={styles.content}>
+          <div className={styles.loginImage}>
+            <img src={emptyImageSrc} />
+          </div>
           <div className={styles.formTitle}>站点后台管理系统</div>
           {tab === TabEnum.login && (
             <LoginForm initialValues={loginInitFormValues} />

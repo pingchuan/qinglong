@@ -25,7 +25,7 @@ const Index: FC<IndexPropsType> = props => {
       (!user?.id || !user?.mail) &&
       !noAuthenticatePath.includes(location.pathname)
     ) {
-      history.push('/login');
+      history.push('/qinglong/login');
     } else {
       dispatch({
         type: 'authenticate/save',

@@ -3,13 +3,13 @@ const Index = [
     path: '/',
     component: '@/layouts/index',
     routes: [
-      { path: '/', redirect: '/userPlan' },
-      { path: '/login', component: 'publicpages/login' },
+      { path: '/', redirect: '/qinglong/userPlan' },
+      { path: '/qinglong/login', component: 'publicpages/login' },
+      { path: '/qinglong/userList', component: 'backpages/userList' },
+      { path: '/qinglong/userPlan', component: 'frontpages/userPlan' },
+      { path: '/qinglong/3', component: 'publicpages/404' },
       { path: '/test1', component: 'testpages/test1' },
       { path: '/test2', component: 'testpages/test2' },
-      { path: '/3', component: 'publicpages/404' },
-      { path: '/userList', component: 'backpages/userList' },
-      { path: '/userPlan', component: 'frontpages/userPlan' },
       { path: '/*', component: 'publicpages/inDevelopment' },
     ],
   },
@@ -17,7 +17,7 @@ const Index = [
 
 const tempPath = ['/test2', '/test2'];
 
-export const fullScreenLayoutPath = ['/login'].concat(tempPath);
-export const noAuthenticatePath = ['/login'].concat(tempPath);
+export const fullScreenLayoutPath = ['/qinglong/login'].concat(tempPath);
+export const noAuthenticatePath = ['/qinglong/login'].concat(tempPath);
 
 export default Index;

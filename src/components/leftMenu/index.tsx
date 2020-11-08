@@ -25,18 +25,18 @@ const Index: FC = () => {
 
   return (
     <Menu
-      defaultSelectedKeys={[history.location.pathname]}
+      selectedKeys={[history.location.pathname]}
       defaultOpenKeys={['sub1']}
       mode="inline"
       onClick={menuOnClick}
     >
-      <MenuItem key="/userPlan" icon={<ProfileOutlined />}>
+      <MenuItem key="/qinglong/userPlan" icon={<ProfileOutlined />}>
         我的计划
       </MenuItem>
-      <MenuItem key="/userList" icon={<UserOutlined />}>
+      <MenuItem key="/qinglong/userList" icon={<UserOutlined />}>
         用户列表
       </MenuItem>
-      <MenuItem key="/other" icon={<BulbOutlined />}>
+      <MenuItem key="/qinglong/other" icon={<BulbOutlined />}>
         其他功能
       </MenuItem>
       {/* <MenuItem key="3" icon={<ContainerOutlined />}>

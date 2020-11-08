@@ -22,10 +22,10 @@ enum AcceptType {
 type CredentialsType = 'include' | 'omit' | 'same-origin' | undefined;
 
 const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
-  let url = apiUrl;
-  if (typeof apiUrl === 'string' && !apiUrl.startsWith('http')) {
-    url = `${apiIp}${apiUrl}`;
-  }
+  const url = '/qinglong' + apiUrl;
+  // if (typeof apiUrl === 'string' && !apiUrl.startsWith('http')) {
+  //   url = `${apiIp}${apiUrl}`;
+  // }
   const {
     Accept,
     responseType,
@@ -67,7 +67,7 @@ function statusValidate(response: Response): boolean {
   const statusString = String(response.status);
   if (statusString === '401') {
     clearCookie('user');
-    window.location.href = '/login';
+    window.location.href = '/qinglong/login';
     return false;
   } else if (statusString.startsWith('4')) {
     Promise.reject('服务器网络异常');

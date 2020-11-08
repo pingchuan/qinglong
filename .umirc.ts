@@ -20,4 +20,11 @@ export default defineConfig({
   theme: {
     "primary-color": "#16a085",
   },
+  proxy: {
+    '/qinglong/api': {
+      'target': 'http://localhost:8001/',
+      'changeOrigin': true,
+      'pathRewrite': { '^/qinglong': '' },
+    },
+  },
 });

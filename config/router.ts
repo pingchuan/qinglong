@@ -3,6 +3,7 @@ const Index = [
     path: '/',
     component: '@/layouts/index',
     routes: [
+      { path: '/qinglong', redirect: '/' },
       { path: '/', redirect: '/qinglong/userPlan' },
       { path: '/qinglong/login', component: 'publicpages/login' },
       { path: '/qinglong/userList', component: 'backpages/userList' },

@@ -45,6 +45,7 @@ const Index: FC<Props> = ({ switchTab }) => {
   const onSubmit = async (values: RegisteredSubmitValues) => {
     setLoading(true);
     const { id } = await postRegistered(values);
+    setLoading(false);
     if (id) {
       message.success('注册成功');
       clearInterval(mailTimer);

@@ -9,6 +9,8 @@ export const setCookie = (key: string, value: string) => {
   const expires = 'expires=' + date.toUTCString();
   document.cookie =
     key + '=' + btoa(encodeURIComponent(value)) + '; ' + expires;
+  document.cookie =
+    key + '=' + btoa(encodeURIComponent(value)) + '; ' + expires + '; path=/;';
 };
 
 /**
@@ -35,4 +37,6 @@ export const clearCookie = (key: string, value?: string) => {
   const date = new Date();
   const expires = 'expires=' + date.toUTCString();
   document.cookie = key + '=' + btoa(value || '{}') + '; ' + expires;
+  document.cookie =
+    key + '=' + btoa(value || '{}') + '; ' + expires + '; path=/;';
 };

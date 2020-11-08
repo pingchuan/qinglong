@@ -8,7 +8,8 @@
 /package-lock.json
 
 # production
-/dist
+# 服务器性能限制编译失败
+# /dist
 
 # misc
 .DS_Store

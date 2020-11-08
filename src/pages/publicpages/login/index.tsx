@@ -65,7 +65,7 @@ const Index: FC = () => {
           <div className={styles.loginImage}>
             <img src={emptyImageSrc} />
           </div>
-          <div className={styles.formTitle}>站点后台管理系统</div>
+          <div className={styles.formTitle}>青龙在线管理系统</div>
           {tab === TabEnum.login && (
             <LoginForm initialValues={loginInitFormValues} />
           )}

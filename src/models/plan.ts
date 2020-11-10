@@ -5,6 +5,7 @@ import { getPlanList } from '@/pages/frontpages/userPlan/service';
 
 export interface PlanState {
   list: PlanValues[];
+  loading: boolean;
 }
 
 declare module 'react-redux' {
@@ -28,6 +29,7 @@ export interface IndexModelType {
 export const initState = (): PlanState => {
   return {
     list: [],
+    loading: false,
   };
 };
 
@@ -36,10 +38,11 @@ const IndexModel: IndexModelType = {
   state: initState(),
   effects: {
     *getList({ _ }, { call, put }) {
+      yield put({ type: 'save', payload: { loading: true } });
       const list = yield call(getPlanList);
       yield put({
         type: 'save',
-        payload: { list },
+        payload: { list, loading: false },
       });
     },
   },

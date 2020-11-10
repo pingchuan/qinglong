@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from 'react';
-import { Button, Empty } from 'antd';
+import { Button, Empty, Spin } from 'antd';
 import { connect } from 'umi';
 import { Dispatch } from 'redux';
 import PlanItem from './planItem';
@@ -10,12 +10,12 @@ import styles from './index.less';
 
 interface Props {
   list: PlanValues[];
+  loading: boolean;
   dispatch: Dispatch;
 }
 
 const Index: FC<Props> = props => {
-  const { list, dispatch } = props;
-
+  const { list, loading, dispatch } = props;
   const [visible, setVisible] = useState(false);
 
   const onSubmit = async (values: PlanValues) => {
@@ -38,13 +38,18 @@ const Index: FC<Props> = props => {
             新增任务
           </Button>
         </div>
-        {list.length ? (
-          list.map((item, index) => {
-            return <PlanItem values={item} key={index} />;
-          })
-        ) : (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无任务" />
-        )}
+        <Spin spinning={loading}>
+          {list.length ? (
+            list.map((item, index) => {
+              return <PlanItem values={item} key={index} />;
+            })
+          ) : (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="暂无任务"
+            />
+          )}
+        </Spin>
       </div>
       <PlanDraWer
         visible={visible}
@@ -57,4 +62,5 @@ const Index: FC<Props> = props => {
 
 export default connect(({ planModal }) => ({
   list: planModal.list,
+  loading: planModal.loading,
 }))(Index);

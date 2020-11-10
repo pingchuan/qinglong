@@ -83,7 +83,7 @@ const Index: FC<Props> = ({ initialValues }) => {
           rules={rulesLength({ max: 32, required: true })}
           className={styles.checkCode}
         >
-          <Input placeholder="请输入验证码" />
+          <Input placeholder="请输入计算结果" />
         </FormItem>
         <div className={styles.checkCodeImage} onClick={getCheckCodeAsync}>
           {checkCodeSrc && <img src={checkCodeSrc} />}

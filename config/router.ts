@@ -16,7 +16,7 @@ const Index = [
   },
 ];
 
-const tempPath = ['/test2', '/test2'];
+const tempPath = ['/test1', '/test2'];
 
 export const fullScreenLayoutPath = ['/qinglong/login'].concat(tempPath);
 export const noAuthenticatePath = ['/qinglong/login'].concat(tempPath);

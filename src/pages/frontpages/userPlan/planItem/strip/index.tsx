@@ -51,13 +51,13 @@ const Index: FC<Props> = ({ value: propValue }) => {
           <FormItem name={EnumStripFormName.phiz} label="当日心情">
             <RadioGroup>
               <Radio value={EnumPhiz.A}>
-                <FrownTwoTone twoToneColor="#16a085" />
+                <FrownTwoTone twoToneColor="#1890ff" />
               </Radio>
               <Radio value={EnumPhiz.B}>
-                <MehTwoTone twoToneColor="#16a085" />
+                <MehTwoTone twoToneColor="#ffb053" />
               </Radio>
               <Radio value={EnumPhiz.C}>
-                <SmileTwoTone twoToneColor="#16a085" />
+                <SmileTwoTone twoToneColor="#8ce527" />
               </Radio>
               <Radio value={EnumPhiz.D}>
                 <SmileTwoTone twoToneColor="#16a085" rotate={180} />

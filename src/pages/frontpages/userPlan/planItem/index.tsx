@@ -1,12 +1,18 @@
 import React, { FC, useState } from 'react';
+import { Tooltip } from 'antd';
 import moment from 'moment';
 import { useDispatch } from 'umi';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  NodeIndexOutlined,
+} from '@ant-design/icons';
 import DeleteModal from '@/components/deleteModel';
 import { PlanValues, PlanDayValues } from '../type';
 import { EnumPhiz } from '../constant';
 import { putPlan, deletePlan } from '../service';
 import PlanDraWer from '../planDrawer';
+import PlanTimeLine from '../planTimeLine';
 import Strip from './strip';
 import styles from './index.less';
 
@@ -14,9 +20,18 @@ interface Props {
   values: PlanValues;
 }
 
+interface TimeLineObj {
+  visible: boolean;
+  values: PlanValues;
+}
+
 const Index: FC<Props> = ({ values: propsValues }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [timeLineObj, setTimeLineObj] = useState<TimeLineObj>({
+    visible: false,
+    values: {} as PlanValues,
+  });
   const momentFormat = 'YYYY-MM-DD';
   const {
     name,
@@ -46,10 +61,31 @@ const Index: FC<Props> = ({ values: propsValues }) => {
     <>
       <div className={styles.planItem}>
         <div className={styles.name}>
-          <div className={styles.editAndDelete}>
-            <EditOutlined onClick={() => setVisible(true)} />
+          {propsValues.values?.length && (
+            <div className={styles.timeLine}>
+              <Tooltip title="时间图谱">
+                <NodeIndexOutlined
+                  onClick={() =>
+                    setTimeLineObj({
+                      visible: true,
+                      values: propsValues,
+                    })
+                  }
+                />
+              </Tooltip>
+            </div>
+          )}
+          <div
+            className={styles.editAndDelete}
+            style={{ left: propsValues.values?.length ? '30px' : '0px' }}
+          >
+            <Tooltip title="编辑">
+              <EditOutlined onClick={() => setVisible(true)} />
+            </Tooltip>
             <DeleteModal onOk={onDelete} id={Number(planId)}>
-              <DeleteOutlined className={styles.delete} />
+              <Tooltip title="删除">
+                <DeleteOutlined className={styles.delete} />
+              </Tooltip>
             </DeleteModal>
           </div>
           <div className={styles.timeRange}>{`${moment(startTime).format(
@@ -82,6 +118,16 @@ const Index: FC<Props> = ({ values: propsValues }) => {
         onOk={onSubmit}
         onCancel={() => setVisible(false)}
         initialValues={propsValues}
+      />
+      <PlanTimeLine
+        visible={timeLineObj.visible}
+        values={timeLineObj.values}
+        onCancel={() =>
+          setTimeLineObj({
+            visible: false,
+            values: {} as PlanValues,
+          })
+        }
       />
     </>
   );

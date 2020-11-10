@@ -50,7 +50,6 @@ const IndexModel: IndexModelType = {
   state: initState(),
   // effects: {
   //   *query({ payload }, { call, put }) {
-  //     console.log(11);
   //   },
   // },
   reducers: {

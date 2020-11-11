@@ -14,9 +14,10 @@ const { TextArea } = Input;
 
 interface Props {
   value: PlanDayValues;
+  showYearMonth?: boolean;
 }
 
-const Index: FC<Props> = ({ value: propValue }) => {
+const Index: FC<Props> = ({ value: propValue, showYearMonth }) => {
   const dispatch = useDispatch();
   const layout = {
     labelCol: { span: 4 },
@@ -35,10 +36,16 @@ const Index: FC<Props> = ({ value: propValue }) => {
       dispatch({ type: 'planModal/getList' });
     }
   };
+  const currentDay = moment(propValue.time).format('DD');
+  const currentYearMonth = moment(propValue.time).format('YYYY年MM月');
+
   return (
     <>
+      {showYearMonth && (
+        <div className={styles.currentYearMonth}>{currentYearMonth}：</div>
+      )}
       <div className={styles.strip} onClick={() => setVisible(true)}>
-        {moment(propValue.time).format('DD')}
+        {currentDay}
         {propValue.description && <div className={styles.stripNote}></div>}
       </div>
       <Modal

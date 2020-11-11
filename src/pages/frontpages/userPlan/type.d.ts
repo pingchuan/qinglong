@@ -14,4 +14,5 @@ export interface PlanValues {
   endTime: number;
   id?: number;
   values?: PlanDayValues[];
+  hasMonthGap?: string;
 }

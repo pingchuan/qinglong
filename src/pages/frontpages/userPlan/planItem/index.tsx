@@ -37,6 +37,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
     name,
     startTime,
     endTime,
+    hasMonthGap,
     values: planDayValues,
     id: planId,
   } = propsValues;
@@ -56,6 +57,10 @@ const Index: FC<Props> = ({ values: propsValues }) => {
       dispatch({ type: 'planModal/getList' });
     }
   };
+
+  const planMonthCount =
+    Number(moment(endTime).format('MM')) -
+    Number(moment(startTime).format('MM'));
 
   return (
     <>
@@ -109,7 +114,18 @@ const Index: FC<Props> = ({ values: propsValues }) => {
               (planDayValues || []).find(
                 item => !moment(item.time).diff(currentDate, 'day'),
               ) || initPlanDayValues;
-            return <Strip key={index} value={currentValue} />;
+            return (
+              <Strip
+                key={index}
+                value={currentValue}
+                showYearMonth={
+                  Boolean(hasMonthGap) &&
+                  Boolean(planMonthCount) &&
+                  (index === 0 ||
+                    moment(currentValue.time).format('DD') === '01')
+                }
+              />
+            );
           })}
         </div>
       </div>

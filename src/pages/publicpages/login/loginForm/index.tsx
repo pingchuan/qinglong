@@ -18,7 +18,7 @@ interface Props {
   dispatch: Dispatch;
 }
 
-const Index: FC<Props> = ({ initialValues }) => {
+const Index: FC<Props> = ({ initialValues, dispatch }) => {
   const [checkCodeSrc, setCheckCodeSrc] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -38,6 +38,7 @@ const Index: FC<Props> = ({ initialValues }) => {
     setLoading(true);
     const { user } = await postLogin(values);
     if (user) {
+      dispatch({ type: 'authenticate/save', payload: { user } });
       setCookie('user', JSON.stringify(user));
       history.push('/');
     } else {

@@ -12,7 +12,15 @@
   height          : 100%;
   box-sizing      : border-box;
   background-color: @green;
-  overflow        : hidden;
+  position        : relative;
+  display         : flex;
+  flex-direction  : column;
+
+}
+
+.leftMenu {
+  flex    : 1;
+  overflow: hidden;
 
   &:hover {
     overflow: auto;

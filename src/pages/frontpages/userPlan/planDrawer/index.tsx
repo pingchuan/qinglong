@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Form, Input, DatePicker } from 'antd';
+import { Form, Input, DatePicker, Select } from 'antd';
 import moment from 'moment';
 import Drawer from '@/components/drawer';
 import { rulesLength } from '@/utils/validators';
@@ -9,6 +9,7 @@ import styles from './index.less';
 
 const { Item: FormItem } = Form;
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 
 interface Props {
   visible: boolean;
@@ -19,8 +20,8 @@ interface Props {
 
 const Index: FC<Props> = ({ visible, onOk, onCancel, initialValues }) => {
   const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 20 },
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 },
   };
 
   const [form] = Form.useForm();
@@ -31,6 +32,7 @@ const Index: FC<Props> = ({ visible, onOk, onCancel, initialValues }) => {
     const reqObj = {
       ...initialValues,
       [FormName.name]: values[FormName.name],
+      [FormName.hasMonthGap]: String(values[FormName.hasMonthGap]),
       [FormName.startTime]: startTime.valueOf(),
       [FormName.endTime]: endTime.valueOf(),
     };
@@ -68,6 +70,19 @@ const Index: FC<Props> = ({ visible, onOk, onCancel, initialValues }) => {
             disabled={Boolean(initialValues)}
             className={styles.rangePicker}
           />
+        </FormItem>
+        <FormItem
+          name={FormName.hasMonthGap}
+          label="跨月是否有间隔"
+          initialValue={
+            (initialValues && String(initialValues[FormName.hasMonthGap])) ||
+            '0'
+          }
+        >
+          <Select placeholder="请选择">
+            <Option value="0">无间隔标识</Option>
+            <Option value="1">有间隔标识</Option>
+          </Select>
         </FormItem>
       </Form>
     </Drawer>

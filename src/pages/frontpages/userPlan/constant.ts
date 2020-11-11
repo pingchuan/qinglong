@@ -15,4 +15,5 @@ export enum FormName {
   timeRange = 'timeRange',
   startTime = 'startTime',
   endTime = 'endTime',
+  hasMonthGap = 'hasMonthGap',
 }

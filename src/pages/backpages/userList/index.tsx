@@ -166,6 +166,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
         visible={modalData.visible}
         onOk={onSubmit}
         onCancel={() => modalChange(false)}
+        destroyOnClose
       >
         <UserInfo user={modalData.user} ref={userRef} />
       </Modal>

@@ -2,10 +2,8 @@ import React, { FC, useRef } from 'react';
 import { Button } from 'antd';
 import moment from 'moment';
 import { connect, Dispatch } from 'umi';
-import UserInfo, {
-  UserRef,
-  UserInfo as UserInfoType,
-} from '@/components/userInfo';
+import UserInfo, { UserRef } from '@/components/userInfo';
+import { UserInfo as UserInfoType } from '@/models/authenticate';
 import { setCookie } from '@/utils/public';
 import { putUserInfo } from '@/service';
 import styles from './index.less';

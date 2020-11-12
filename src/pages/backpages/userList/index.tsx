@@ -1,23 +1,50 @@
-import React, { FC } from 'react';
-import { Table, Tooltip, Space } from 'antd';
+import React, { FC, useState, useEffect, useRef } from 'react';
+import { Table, Tooltip, Space, Button, Modal } from 'antd';
+import moment from 'moment';
+import { connect, Dispatch } from 'umi';
 import { WomanOutlined, ManOutlined } from '@ant-design/icons';
+import { getUserInfo, putUserInfo } from '@/service';
+import { UserInfo as UserInfoType } from '@/models/authenticate';
+import imageSrc from '@/assets/images/qinglong.png';
 import { ColumnsType } from 'antd/es/table';
+import UserInfo, { UserRef } from '@/components/userInfo';
 import styles from './index.less';
 
-const Index: FC = () => {
-  const columns: ColumnsType<UserInfo> = [
+interface Props {
+  currentUser: UserInfoType;
+  dispatch: Dispatch;
+}
+interface ModalData {
+  visible: boolean;
+  user: UserInfoType;
+}
+
+const initUser = (): UserInfoType => ({
+  id: '',
+  username: '',
+  mail: '',
+});
+
+const Index: FC<Props> = ({ currentUser, dispatch }) => {
+  const userRef = useRef<UserRef>(null);
+  const [data, setData] = useState<UserInfoType[]>([]);
+  const [modalData, setModalData] = useState<ModalData>({
+    visible: false,
+    user: initUser(),
+  });
+  const columns: ColumnsType<UserInfoType> = [
     {
       width: 65,
       title: '头像',
-      dataIndex: 'headImage',
+      dataIndex: 'image',
       render: value => {
-        return <img className={styles.userImage} src={value} />;
+        return <img className={styles.userImage} src={value || imageSrc} />;
       },
     },
     {
       ellipsis: true,
       title: '姓名',
-      dataIndex: 'name',
+      dataIndex: 'username',
     },
     {
       width: 80,
@@ -44,15 +71,16 @@ const Index: FC = () => {
     {
       width: 80,
       title: '年龄',
-      dataIndex: 'age',
+      dataIndex: 'birthday',
+      render: value => moment().diff(moment(value), 'year'),
     },
     {
-      width: 150,
+      width: 180,
       title: '手机',
       dataIndex: 'cellPhone',
     },
     {
-      width: 150,
+      width: 180,
       title: '固定电话',
       dataIndex: 'phone',
     },
@@ -62,39 +90,65 @@ const Index: FC = () => {
       dataIndex: 'mail',
     },
     {
-      width: 140,
+      width: 160,
       title: '操作',
       dataIndex: 'id',
-      render: (id, record) => {
+      render: (_, record) => {
         return (
           <Space>
-            <a>编辑</a>
-            <a>删除</a>
+            <Button type="link" onClick={() => modalChange(true, record)}>
+              编辑
+            </Button>
+            <Button type="link" disabled>
+              删除
+            </Button>
           </Space>
         );
       },
     },
   ];
 
-  const data: UserInfo[] = new Array(20).fill(0).map((e, index) => ({
-    id: index + '',
-    name:
-      'John BrownJohn BrownJohn BrownJohn BrownJohn BrownJohn BrownJohn BrownJohn BrownJohn BrownJohn Brown',
-    age: 32,
-    sex: index % 2 === 0 ? 'woman' : 'man',
-    cellPhone: '15847986438',
-    phone: '023-78226911',
-    mail: '10571022282@qq.com',
-    headImage: '/icon.jpg',
-    description:
-      index % 2 === 0
-        ? '按照 React 的规范，所有的数组组件必须绑定 key。在 Table 中，dataSource 和 columns 里的数据值都需要指定 key 值。对于 dataSource 默认将每列数据的 key 属性作为唯一的标识。'
-        : '',
-  }));
+  const getUserInfoAsync = async () => {
+    const res = await getUserInfo();
+    setData(res);
+  };
+
+  const modalChange = (modalVisible: boolean, modalUser?: UserInfoType) => {
+    setModalData({
+      visible: modalVisible,
+      user: modalUser || initUser(),
+    });
+  };
+
+  const onSubmit = async () => {
+    const values = await userRef.current?.getData();
+    if (values) {
+      const userRes = await putUserInfo({
+        ...values,
+        birthday: values.birthday
+          ? moment(values.birthday).valueOf()
+          : values.birthday,
+      });
+      if (userRes.id) {
+        getUserInfoAsync();
+        modalChange(false);
+        if (currentUser.id === userRes.id) {
+          dispatch({
+            type: 'authenticate/getCurrentUser',
+            payload: { id: userRes.id },
+          });
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getUserInfoAsync();
+  }, []);
 
   return (
     <div className={styles.userList}>
-      <Table<UserInfo>
+      <Table<UserInfoType>
         rowKey="id"
         bordered={true}
         columns={columns}
@@ -106,8 +160,19 @@ const Index: FC = () => {
           rowExpandable: record => Boolean(record.description),
         }}
       />
+      <Modal
+        width={800}
+        title="编辑用户信息"
+        visible={modalData.visible}
+        onOk={onSubmit}
+        onCancel={() => modalChange(false)}
+      >
+        <UserInfo user={modalData.user} ref={userRef} />
+      </Modal>
     </div>
   );
 };
 
-export default Index;
+export default connect(({ authenticate }) => ({
+  currentUser: authenticate.user,
+}))(Index);

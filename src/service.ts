@@ -12,6 +12,6 @@ export function putUserInfo(params: UserInfo) {
 }
 
 // 获取用户信息
-export function getUserInfo(params: { id: string }) {
+export function getUserInfo(params?: { id: string }): Promise<UserInfo[]> {
   return request(`/api/user?${stringify(params)}`);
 }

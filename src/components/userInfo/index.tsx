@@ -98,5 +98,4 @@ const Index = forwardRef<UserRef, Props>(({ user }, ref) => {
   );
 });
 
-export { UserInfo } from '@/models/authenticate';
 export default Index;

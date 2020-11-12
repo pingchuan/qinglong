@@ -26,7 +26,7 @@ const Index: FC<IndexPropsType> = props => {
       !noAuthenticatePath.includes(location.pathname)
     ) {
       history.push('/qinglong/login');
-    } else {
+    } else if (user.id) {
       dispatch({
         type: 'authenticate/getCurrentUser',
         payload: { id: user.id },

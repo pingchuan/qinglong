@@ -1,12 +1,13 @@
-// import { Effect } from 'dva';
+import { Effect } from 'dva';
 import { Reducer } from 'redux';
+import { getUserInfo } from '@/service';
 
 export interface UserInfo {
   id: string;
   username: string;
   mail: string;
   sex?: 'man' | 'woman';
-  age?: number;
+  birthday?: number;
   cellPhone?: string;
   phone?: string;
   image?: string;
@@ -26,9 +27,9 @@ declare module 'react-redux' {
 export interface IndexModelType {
   namespace: 'authenticate';
   state: AuthenticateState;
-  // effects: {
-  //   query: Effect;
-  // };
+  effects: {
+    getCurrentUser: Effect;
+  };
   reducers: {
     save: Reducer<AuthenticateState>;
   };
@@ -48,10 +49,15 @@ export const initState = (): AuthenticateState => {
 const IndexModel: IndexModelType = {
   namespace: 'authenticate',
   state: initState(),
-  // effects: {
-  //   *query({ payload }, { call, put }) {
-  //   },
-  // },
+  effects: {
+    *getCurrentUser({ payload }, { call, put }) {
+      const user = yield call(getUserInfo, payload);
+      yield put({
+        type: 'save',
+        payload: { user },
+      });
+    },
+  },
   reducers: {
     save(state, { payload }) {
       return {

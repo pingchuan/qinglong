@@ -1,7 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { connect } from 'dva';
 import { history } from 'umi';
-import { Dispatch } from 'redux';
 import { Form, Input, Button } from 'antd';
 import { UnlockOutlined, UserOutlined } from '@ant-design/icons';
 import { rulesLength } from '@/utils/validators';
@@ -15,10 +13,9 @@ const { Item: FormItem } = Form;
 
 interface Props {
   initialValues: LoginSubmitValues;
-  dispatch: Dispatch;
 }
 
-const Index: FC<Props> = ({ initialValues, dispatch }) => {
+const Index: FC<Props> = ({ initialValues }) => {
   const [checkCodeSrc, setCheckCodeSrc] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +35,6 @@ const Index: FC<Props> = ({ initialValues, dispatch }) => {
     setLoading(true);
     const { user } = await postLogin(values);
     if (user) {
-      dispatch({ type: 'authenticate/save', payload: { user } });
       setCookie('user', JSON.stringify(user));
       history.push('/');
     } else {
@@ -105,4 +101,4 @@ const Index: FC<Props> = ({ initialValues, dispatch }) => {
   );
 };
 
-export default connect()(Index);
+export default Index;

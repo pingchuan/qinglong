@@ -28,8 +28,8 @@ const Index: FC<IndexPropsType> = props => {
       history.push('/qinglong/login');
     } else {
       dispatch({
-        type: 'authenticate/save',
-        payload: user,
+        type: 'authenticate/getCurrentUser',
+        payload: { id: user.id },
       });
     }
   });

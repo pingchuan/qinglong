@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import Drawer from '@/components/drawer';
 import FixedBack from '@/components/fixedBack';
 import styles from './index.less';
-import { test, getCheckCode } from './service';
+import { getCheckCode } from './service';
 
 export default () => {
   const [visible, setVisible] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
-  const sendRequestAsync = async () => {
-    const res = await test();
-    console.log(res, '#send');
-  };
   const getCheckCodeAsync = async () => {
     const { data } = await getCheckCode();
     setImageSrc(data as string);
@@ -21,7 +17,6 @@ export default () => {
 
   return (
     <div>
-      <div onClick={sendRequestAsync}>send request</div>
       <div onClick={openDrawer}>open drawer</div>
       <div onClick={getCheckCodeAsync}>getCheckCode</div>
       <img src={imageSrc} />

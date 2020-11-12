@@ -66,7 +66,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
     <>
       <div className={styles.planItem}>
         <div className={styles.name}>
-          {propsValues.values?.length && (
+          {Boolean(propsValues.values?.length) && (
             <div className={styles.timeLine}>
               <Tooltip title="时间图谱">
                 <NodeIndexOutlined

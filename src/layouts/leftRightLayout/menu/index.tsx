@@ -36,6 +36,9 @@ const Index: FC = () => {
       <MenuItem key="/qinglong/userList" icon={<UserOutlined />}>
         用户列表
       </MenuItem>
+      <MenuItem key="/qinglong/userInfo" icon={<UserOutlined />}>
+        个人信息
+      </MenuItem>
       <MenuItem key="/qinglong/other" icon={<BulbOutlined />}>
         其他功能
       </MenuItem>

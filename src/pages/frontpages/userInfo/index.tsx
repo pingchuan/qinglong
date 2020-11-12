@@ -1,7 +1,7 @@
 import React, { FC, useRef } from 'react';
 import { Button } from 'antd';
 import moment from 'moment';
-import { connect, Dispatch } from 'umi';
+import { connect, Dispatch, history } from 'umi';
 import UserInfo, { UserRef } from '@/components/userInfo';
 import { UserInfo as UserInfoType } from '@/models/authenticate';
 import { setCookie } from '@/utils/public';
@@ -40,6 +40,9 @@ const Index: FC<Props> = ({ user, dispatch }) => {
       <UserInfo key={JSON.stringify(user)} user={user} ref={userRef} />
       <Button className={styles.button} onClick={onSubmit}>
         保存
+      </Button>
+      <Button className={styles.button} type="dashed" onClick={history.goBack}>
+        返回
       </Button>
     </div>
   );

@@ -33,3 +33,8 @@ export function postLogin(params: LoginSubmitValues) {
     body: params,
   });
 }
+
+// 登出用户
+export function getLogout() {
+  return request('/api/public/logout');
+}

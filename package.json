@@ -19,12 +19,15 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^5.0.12",
+    "@types/classnames": "^2.2.11",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.2.23",
+    "classnames": "^2.2.6",
     "lint-staged": "^10.0.7",
     "qs": "^6.9.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-image-crop": "^8.6.6",
     "umi": "^3.2.23",
     "yorkie": "^2.0.0"
   },

@@ -58,9 +58,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
     }
   };
 
-  const planMonthCount =
-    Number(moment(endTime).format('MM')) -
-    Number(moment(startTime).format('MM'));
+  const planMonthCount = moment(endTime).diff(moment(startTime), 'M');
 
   return (
     <>

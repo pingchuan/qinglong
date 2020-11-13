@@ -72,7 +72,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
       width: 80,
       title: '年龄',
       dataIndex: 'birthday',
-      render: value => moment().diff(moment(value), 'year'),
+      render: value => value && moment().diff(moment(value), 'year'),
     },
     {
       width: 180,

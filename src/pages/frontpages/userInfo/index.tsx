@@ -19,25 +19,50 @@ const Index: FC<Props> = ({ user, dispatch }) => {
   const onSubmit = async () => {
     const values = await userRef.current?.getData();
     if (values) {
-      const userRes = await putUserInfo({
+      const resUser = await putUserInfo({
         ...values,
         birthday: values.birthday
           ? moment(values.birthday).valueOf()
           : values.birthday,
       });
-      if (userRes.id) {
-        setCookie('user', JSON.stringify(user));
+      if (resUser) {
+        setCookie('user', JSON.stringify(resUser));
         dispatch({
           type: 'authenticate/getCurrentUser',
-          payload: { id: user.id },
+          payload: { id: resUser.id },
         });
       }
     }
   };
 
+  const imageUploadCallback = async (
+    imageUploadUser: UserInfoType,
+    cb?: () => void,
+  ): Promise<void> => {
+    const resUser = await putUserInfo({
+      ...imageUploadUser,
+      birthday: imageUploadUser.birthday
+        ? moment(imageUploadUser.birthday).valueOf()
+        : imageUploadUser.birthday,
+    });
+    if (resUser) {
+      setCookie('user', JSON.stringify(resUser));
+      dispatch({
+        type: 'authenticate/getCurrentUser',
+        payload: { id: resUser.id },
+      });
+      cb && cb();
+    }
+  };
+
   return (
     <div className={styles.content}>
-      <UserInfo key={JSON.stringify(user)} user={user} ref={userRef} />
+      <UserInfo
+        key={JSON.stringify(user)}
+        user={user}
+        imageUploadCallback={imageUploadCallback}
+        ref={userRef}
+      />
       <Button className={styles.button} onClick={onSubmit}>
         保存
       </Button>

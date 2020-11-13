@@ -8,6 +8,7 @@ import { UserInfo as UserInfoType } from '@/models/authenticate';
 import imageSrc from '@/assets/images/qinglong.png';
 import { ColumnsType } from 'antd/es/table';
 import UserInfo, { UserRef } from '@/components/userInfo';
+import { setCookie } from '@/utils/public';
 import styles from './index.less';
 
 interface Props {
@@ -120,22 +121,45 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
   const onSubmit = async () => {
     const values = await userRef.current?.getData();
     if (values) {
-      const userRes = await putUserInfo({
+      const resUser = await putUserInfo({
         ...values,
         birthday: values.birthday
           ? moment(values.birthday).valueOf()
           : values.birthday,
       });
-      if (userRes.id) {
+      if (resUser) {
         getUserInfoAsync();
         modalChange(false);
-        if (currentUser.id === userRes.id) {
+        if (currentUser.id === resUser.id) {
+          setCookie('user', JSON.stringify(resUser));
           dispatch({
             type: 'authenticate/getCurrentUser',
-            payload: { id: userRes.id },
+            payload: { id: resUser.id },
           });
         }
       }
+    }
+  };
+
+  const imageUploadCallback = async (
+    imageUploadUser: UserInfoType,
+    cb?: () => void,
+  ): Promise<void> => {
+    const resUser = await putUserInfo({
+      ...imageUploadUser,
+      birthday: imageUploadUser.birthday
+        ? moment(imageUploadUser.birthday).valueOf()
+        : imageUploadUser.birthday,
+    });
+    if (currentUser.id === resUser.id) {
+      setCookie('user', JSON.stringify(resUser));
+      dispatch({
+        type: 'authenticate/getCurrentUser',
+        payload: { id: resUser.id },
+      });
+    }
+    if (resUser) {
+      cb && cb();
     }
   };
 
@@ -162,10 +186,17 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
         title="编辑用户信息"
         visible={modalData.visible}
         onOk={onSubmit}
-        onCancel={() => modalChange(false)}
+        onCancel={() => {
+          modalChange(false);
+          getUserInfoAsync();
+        }}
         destroyOnClose
       >
-        <UserInfo user={modalData.user} ref={userRef} />
+        <UserInfo
+          user={modalData.user}
+          ref={userRef}
+          imageUploadCallback={imageUploadCallback}
+        />
       </Modal>
     </div>
   );

@@ -21,6 +21,5 @@ export function postUpload(params: { file: Blob }) {
   return request('/api/public/uploadImage', {
     method: 'POST',
     body: params,
-    hasTip: true,
   });
 }

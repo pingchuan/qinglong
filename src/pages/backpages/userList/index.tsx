@@ -150,6 +150,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
         ? moment(imageUploadUser.birthday).valueOf()
         : imageUploadUser.birthday,
     });
+    setModalData({ visible: modalData.visible, user: resUser });
     if (currentUser.id === resUser.id) {
       setCookie('user', JSON.stringify(resUser));
       dispatch({

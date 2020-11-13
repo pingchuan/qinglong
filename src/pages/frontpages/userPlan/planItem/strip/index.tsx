@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Modal, Form, Radio, Input } from 'antd';
+import { Modal, Form, Radio, Input, Tooltip } from 'antd';
 import moment from 'moment';
 import { useDispatch } from 'umi';
 import { FrownTwoTone, MehTwoTone, SmileTwoTone } from '@ant-design/icons';
@@ -58,16 +58,24 @@ const Index: FC<Props> = ({ value: propValue, showYearMonth }) => {
           <FormItem name={EnumStripFormName.phiz} label="当日心情">
             <RadioGroup>
               <Radio value={EnumPhiz.A}>
-                <FrownTwoTone twoToneColor="#1890ff" />
+                <Tooltip title="低于60分">
+                  <FrownTwoTone twoToneColor="#1890ff" />
+                </Tooltip>
               </Radio>
               <Radio value={EnumPhiz.B}>
-                <MehTwoTone twoToneColor="#ffb053" />
+                <Tooltip title="60分到80分">
+                  <MehTwoTone twoToneColor="#ffb053" />
+                </Tooltip>
               </Radio>
               <Radio value={EnumPhiz.C}>
-                <SmileTwoTone twoToneColor="#8ce527" />
+                <Tooltip title="80分到120分">
+                  <SmileTwoTone twoToneColor="#8ce527" />
+                </Tooltip>
               </Radio>
               <Radio value={EnumPhiz.D}>
-                <SmileTwoTone twoToneColor="#16a085" rotate={180} />
+                <Tooltip title="高于120分">
+                  <SmileTwoTone twoToneColor="#16a085" rotate={180} />
+                </Tooltip>
               </Radio>
             </RadioGroup>
           </FormItem>

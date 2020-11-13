@@ -75,22 +75,22 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
       render: value => value && moment().diff(moment(value), 'year'),
     },
     {
-      width: 180,
+      width: 150,
       title: '手机',
       dataIndex: 'cellPhone',
     },
     {
-      width: 180,
+      width: 150,
       title: '固定电话',
       dataIndex: 'phone',
     },
     {
-      width: 180,
+      width: 200,
       title: '邮箱',
       dataIndex: 'mail',
     },
     {
-      width: 160,
+      width: 100,
       title: '操作',
       dataIndex: 'id',
       render: (_, record) => {
@@ -98,9 +98,6 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
           <Space>
             <Button type="link" onClick={() => modalChange(true, record)}>
               编辑
-            </Button>
-            <Button type="link" disabled>
-              删除
             </Button>
           </Space>
         );

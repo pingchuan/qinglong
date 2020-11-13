@@ -9,6 +9,7 @@ import {
 import { UserInfo } from '@/models/authenticate';
 import { getLogout } from '@/pages/publicpages/login/service';
 import imageSrc from '@/assets/images/qinglong.png';
+import DeleteModal from '@/components/deleteModel';
 import styles from './index.less';
 
 const { Meta } = Card;
@@ -36,9 +37,16 @@ const Index: FC<Props> = ({ user }) => {
             onClick={() => history.push('/qinglong/userInfo')}
           />
         </Tooltip>,
-        <Tooltip key="logout" title="注销">
-          <LogoutOutlined className={styles.cardOperate} onClick={getLogout} />
-        </Tooltip>,
+        <DeleteModal
+          key="logout"
+          id="logout"
+          content="注销操作将关闭此页面，并删除您在浏览器中所暂存的个人信息"
+          onOk={getLogout}
+        >
+          <Tooltip title="注销">
+            <LogoutOutlined className={styles.cardOperate} />
+          </Tooltip>
+        </DeleteModal>,
       ]}
     >
       <Meta

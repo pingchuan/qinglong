@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cropper from 'react-cropper';
 import classnames from 'classnames';
 import { Modal, Upload, message } from 'antd';
@@ -67,6 +67,15 @@ export const Demo: React.FC<Props> = ({
     }
   };
 
+  const handCancel = () => {
+    setImage('');
+    onCancel();
+  };
+
+  useEffect(() => {
+    setImage(defaultUrl);
+  }, [useEffect]);
+
   return (
     <Modal
       title="选择图片"
@@ -74,7 +83,7 @@ export const Demo: React.FC<Props> = ({
       destroyOnClose
       width={668}
       onOk={handleSubmit}
-      onCancel={onCancel}
+      onCancel={handCancel}
     >
       <div className={styles.cropper}>
         <Cropper

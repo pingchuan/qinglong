@@ -78,6 +78,7 @@ export const Demo: React.FC<Props> = ({
       title="选择图片"
       visible={visible}
       destroyOnClose
+      maskClosable={false}
       width={668}
       onOk={handleSubmit}
       onCancel={handCancel}

@@ -61,7 +61,7 @@ const Index: FC<Props> = ({ values: valuesProps, visible, onCancel }) => {
       }
       visible={visible}
       onCancel={onCancel}
-      destroyOnClose={true}
+      destroyOnClose
       maskClosable={false}
       footer={null}
     >

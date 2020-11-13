@@ -191,6 +191,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
           getUserInfoAsync();
         }}
         destroyOnClose
+        maskClosable={false}
       >
         <UserInfo
           user={modalData.user}

@@ -44,7 +44,13 @@ const Index: FC<Props> = ({ value: propValue, showYearMonth }) => {
       {showYearMonth && (
         <div className={styles.currentYearMonth}>{currentYearMonth}：</div>
       )}
-      <div className={styles.strip} onClick={() => setVisible(true)}>
+      <div
+        className={styles.strip}
+        onClick={() => {
+          setVisible(true);
+          form.resetFields();
+        }}
+      >
         {currentDay}
         {propValue.description && <div className={styles.stripNote}></div>}
       </div>
@@ -53,6 +59,8 @@ const Index: FC<Props> = ({ value: propValue, showYearMonth }) => {
         visible={visible}
         onCancel={() => setVisible(false)}
         onOk={onSubmit}
+        maskClosable={false}
+        destroyOnClose
       >
         <Form {...layout} name="basic" form={form} initialValues={propValue}>
           <FormItem name={EnumStripFormName.phiz} label="当日心情">

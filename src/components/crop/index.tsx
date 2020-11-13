@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Cropper from 'react-cropper';
 import classnames from 'classnames';
 import { Modal, Upload, message } from 'antd';
-import { UploadChangeParam, RcFile } from 'antd/lib/upload/interface';
+import { RcFile } from 'antd/lib/upload/interface';
 import { PlusOutlined } from '@ant-design/icons';
 import 'cropperjs/dist/cropper.css';
 import imageSrc from '@/assets/images/qinglong.png';
@@ -16,18 +16,6 @@ function getBase64(
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
-}
-
-function beforeUpload(file: RcFile) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isJpgOrPng) {
-    message.error('仅支持JPG/PNG格式的文件');
-  }
-  if (!isLt2M) {
-    message.error('仅支持2M以下图片');
-  }
-  return isJpgOrPng && isLt2M;
 }
 
 interface Props {
@@ -52,17 +40,25 @@ export const Demo: React.FC<Props> = ({
     }
   };
 
-  const handleChange = (info: UploadChangeParam) => {
-    if (info.file.status === 'done') {
-      getBase64(info.file.originFileObj as Blob, imageUrl =>
-        setImage(imageUrl as string),
-      );
+  const beforeUpload = (file: RcFile) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isJpgOrPng) {
+      message.error('仅支持JPG/PNG格式的文件');
     }
+    if (!isLt2M) {
+      message.error('仅支持2M以下图片');
+    }
+    if (isJpgOrPng && isLt2M) {
+      getBase64(file, imageUrl => setImage(imageUrl as string));
+    }
+    return false;
   };
 
   const handleSubmit = async () => {
     const { path } = await postUpload({ file: getCropData() });
-    if (onOk) {
+    if (path && onOk) {
+      setImage('');
       onOk(path);
     }
   };
@@ -85,9 +81,9 @@ export const Demo: React.FC<Props> = ({
       onOk={handleSubmit}
       onCancel={handCancel}
     >
-      <div className={styles.cropper}>
+      <div className={styles.cropperWrapper}>
         <Cropper
-          style={{ height: 400, width: 400 }}
+          className={styles.cropper}
           initialAspectRatio={1}
           preview=".img-preview"
           src={image}
@@ -106,12 +102,12 @@ export const Demo: React.FC<Props> = ({
         <div className={styles.box}>
           <div className={styles.uploadWrapper}>
             <Upload
-              name="avatar"
+              name="image"
+              accept="image/*"
               listType="picture-card"
               className={styles.upload}
               showUploadList={false}
               beforeUpload={beforeUpload}
-              onChange={handleChange}
             >
               <PlusOutlined />
             </Upload>

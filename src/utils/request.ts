@@ -1,12 +1,13 @@
 import { message } from 'antd';
-import { apiIp } from 'config/public';
 import { clearCookie } from '@/utils/public';
 
+type CredentialsType = 'include' | 'omit' | 'same-origin' | undefined;
+type JsonOrForm = 'json' | 'form';
+type JsonOrBlob = 'json' | 'blob';
 interface ExtendOptions extends RequestInit {
-  Accept?: 'json' | 'form';
-  responseType?: 'json' | 'blob';
+  responseType?: JsonOrBlob;
   hasTip?: boolean;
-  ContentType?: string;
+  bodyType?: JsonOrForm;
   body?: any;
 }
 
@@ -14,30 +15,44 @@ interface IndexType {
   (apiUrl: RequestInfo, options?: ExtendOptions): Promise<any>;
 }
 
-enum AcceptType {
-  json = 'application/json;charset=UTF-8',
-  form = 'application/x-www-form-urlencoded;charset=UTF-8',
-}
+const headerWrapper = (
+  bodyType?: JsonOrForm,
+  extendOptions?: ExtendOptions,
+) => {
+  if (bodyType && bodyType === 'form') {
+    return extendOptions?.headers || {};
+  } else {
+    return {
+      ...(extendOptions?.headers || {}),
+      'Content-Type': 'application/json;charset=UTF-8',
+    };
+  }
+};
 
-type CredentialsType = 'include' | 'omit' | 'same-origin' | undefined;
+const bodyWrapper = (body?: any, bodyType?: JsonOrForm) => {
+  let result = null;
+  if (body && typeof body === 'object' && bodyType === 'form') {
+    const formdata = new FormData();
+    for (const key in body) {
+      formdata.append(key, body[key]);
+    }
+    result = formdata;
+  } else if (body) {
+    result = JSON.stringify(body);
+  }
+  return result;
+};
 
 const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
   const url = '/qinglong' + apiUrl;
-  // if (typeof apiUrl === 'string' && !apiUrl.startsWith('http')) {
-  //   url = `${apiIp}${apiUrl}`;
-  // }
   const {
-    Accept,
     responseType,
-    ContentType,
+    bodyType,
     hasTip,
     ...otherExtendOptions
   } = extendOptions;
-  const headers = {
-    Accept: Accept === 'form' ? AcceptType.form : AcceptType.json,
-    'Content-Type': ContentType || 'application/json',
-    ...(extendOptions?.headers || {}),
-  };
+  const headers = headerWrapper(bodyType, extendOptions);
+
   const options = Object.assign(
     {
       headers,
@@ -46,7 +61,7 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
       credentials: 'include' as CredentialsType,
     },
     otherExtendOptions.body
-      ? { body: JSON.stringify(otherExtendOptions.body) }
+      ? { body: bodyWrapper(otherExtendOptions.body, bodyType) }
       : null,
   );
   try {

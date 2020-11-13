@@ -8,9 +8,7 @@ import {
 
 // 获取验证码
 export function getCheckCode() {
-  return request('/api/public/checkCode', {
-    Accept: 'form',
-  });
+  return request('/api/public/checkCode');
 }
 
 // 获取邮箱验证码

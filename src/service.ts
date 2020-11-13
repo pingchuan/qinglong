@@ -15,3 +15,12 @@ export function putUserInfo(params: UserInfo) {
 export function getUserInfo(params?: { id: string }): Promise<UserInfo[]> {
   return request(`/api/user?${stringify(params)}`);
 }
+
+// 上传文件
+export function postUpload(params: { file: Blob }) {
+  return request('/api/public/uploadImage', {
+    method: 'POST',
+    body: params,
+    hasTip: true,
+  });
+}

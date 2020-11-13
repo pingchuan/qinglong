@@ -5,7 +5,6 @@ import { connect, Dispatch } from 'umi';
 import { WomanOutlined, ManOutlined } from '@ant-design/icons';
 import { getUserInfo, putUserInfo } from '@/service';
 import { UserInfo as UserInfoType } from '@/models/authenticate';
-import imageSrc from '@/assets/images/qinglong.png';
 import { ColumnsType } from 'antd/es/table';
 import UserInfo, { UserRef } from '@/components/userInfo';
 import { setCookie } from '@/utils/public';
@@ -39,7 +38,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
       title: '头像',
       dataIndex: 'image',
       render: value => {
-        return <img className={styles.userImage} src={value || imageSrc} />;
+        return <img className={styles.userImage} src={value} />;
       },
     },
     {

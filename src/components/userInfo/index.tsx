@@ -2,7 +2,6 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { Avatar, Form, Input, Select, DatePicker } from 'antd';
 import moment from 'moment';
 import { UserInfo } from '@/models/authenticate';
-import imageSrc from '@/assets/images/qinglong.png';
 import { rulesLength } from '@/utils/validators';
 import Crop from '@/components/crop';
 import { FormName } from './constant';
@@ -64,7 +63,7 @@ const Index = forwardRef<UserRef, Props>(
           <section className={styles.userLeft}>
             <div>
               <a onClick={() => setVisible(true)}>
-                <Avatar size={80} src={user.image || imageSrc} />
+                <Avatar size={80} src={user.image} />
               </a>
               <b>{user.username}</b>
               <span className={styles.mail}>{user.mail}</span>

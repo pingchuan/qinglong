@@ -5,7 +5,6 @@ import { Modal, Upload, message } from 'antd';
 import { RcFile } from 'antd/lib/upload/interface';
 import { PlusOutlined } from '@ant-design/icons';
 import 'cropperjs/dist/cropper.css';
-import imageSrc from '@/assets/images/qinglong.png';
 import { postUpload } from '@/service';
 import styles from './index.less';
 
@@ -31,7 +30,7 @@ export const Demo: React.FC<Props> = ({
   onOk,
   onCancel,
 }) => {
-  const [image, setImage] = useState(defaultUrl || imageSrc);
+  const [image, setImage] = useState(defaultUrl);
   const [cropper, setCropper] = useState<any>();
 
   const getCropData = () => {
@@ -69,8 +68,10 @@ export const Demo: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    setImage(defaultUrl);
-  }, [useEffect]);
+    if (visible) {
+      setImage(defaultUrl);
+    }
+  }, [visible, defaultUrl]);
 
   return (
     <Modal

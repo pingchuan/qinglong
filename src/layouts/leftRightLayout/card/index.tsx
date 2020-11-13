@@ -8,7 +8,6 @@ import {
 } from '@ant-design/icons';
 import { UserInfo } from '@/models/authenticate';
 import { getLogout } from '@/pages/publicpages/login/service';
-import imageSrc from '@/assets/images/qinglong.png';
 import DeleteModal from '@/components/deleteModel';
 import styles from './index.less';
 
@@ -50,7 +49,7 @@ const Index: FC<Props> = ({ user }) => {
       ]}
     >
       <Meta
-        avatar={<Avatar size="large" src={user.image || imageSrc} />}
+        avatar={<Avatar size="large" src={user.image} />}
         title={user.username}
         description={user.mail}
       />

@@ -40,6 +40,7 @@ const IndexModel: IndexModelType = {
     *getList({ _ }, { call, put }) {
       yield put({ type: 'save', payload: { loading: true } });
       const list = yield call(getPlanList);
+
       yield put({
         type: 'save',
         payload: { list, loading: false },

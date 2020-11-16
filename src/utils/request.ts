@@ -31,8 +31,10 @@ const headerWrapper = (
 
 const bodyWrapper = (body?: any, bodyType?: JsonOrForm) => {
   let result = null;
+
   if (body && typeof body === 'object' && bodyType === 'form') {
     const formdata = new FormData();
+
     for (const key in body) {
       formdata.append(key, body[key]);
     }
@@ -64,8 +66,10 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
       ? { body: bodyWrapper(otherExtendOptions.body, bodyType) }
       : null,
   );
+
   try {
     const response = await fetch(url, options);
+
     if (statusValidate(response)) {
       hasTip && message.success('操作成功');
       return responseType === 'blob' ? response.blob() : response.json();
@@ -80,6 +84,7 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
 
 function statusValidate(response: Response): boolean {
   const statusString = String(response.status);
+
   if (statusString === '401') {
     clearCookie('user');
     window.location.href = '/qinglong/login';

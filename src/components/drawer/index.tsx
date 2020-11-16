@@ -10,6 +10,7 @@ declare const ButtonTypes: [
   'link',
   'text',
 ];
+
 type ButtonType = typeof ButtonTypes[number];
 
 interface Props {
@@ -71,6 +72,7 @@ const Index: FC<Props> = props => {
       </div>
     );
   };
+
   return (
     <Drawer
       visible={visible}

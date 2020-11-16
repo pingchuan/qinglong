@@ -19,8 +19,10 @@ interface IndexPropsType {
 
 const Index: FC<IndexPropsType> = props => {
   const { location, dispatch } = props;
+
   useEffect(() => {
     const user = JSON.parse(getCookie('user') || '{}');
+
     if (
       (!user?.id || !user?.mail) &&
       !noAuthenticatePath.includes(location.pathname)

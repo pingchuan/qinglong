@@ -19,6 +19,7 @@ interface Props {
 
 const Index: FC<Props> = ({ user }) => {
   const onClick = () => message.warning('开发中');
+
   return (
     <Card
       className={styles.card}

@@ -18,6 +18,7 @@ const Index: FC<Props> = ({ user, dispatch }) => {
 
   const onSubmit = async () => {
     const values = await userRef.current?.getData();
+
     if (values) {
       const resUser = await putUserInfo({
         ...values,
@@ -25,6 +26,7 @@ const Index: FC<Props> = ({ user, dispatch }) => {
           ? moment(values.birthday).valueOf()
           : values.birthday,
       });
+
       if (resUser) {
         setCookie('user', JSON.stringify(resUser));
         dispatch({
@@ -45,6 +47,7 @@ const Index: FC<Props> = ({ user, dispatch }) => {
         ? moment(imageUploadUser.birthday).valueOf()
         : imageUploadUser.birthday,
     });
+
     if (resUser) {
       setCookie('user', JSON.stringify(resUser));
       dispatch({

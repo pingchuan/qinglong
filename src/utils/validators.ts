@@ -34,6 +34,7 @@ export const rulesLength = ({
   required?: boolean;
 }): Rule[] | undefined => {
   const rules: Rule[] = [];
+
   if (required) {
     rules.push(rulesReruired());
   }

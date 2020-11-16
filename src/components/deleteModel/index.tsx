@@ -28,6 +28,7 @@ const Index: FC<Props> = props => {
       okType: 'danger',
     });
   };
+
   return <span onClick={showConfirm}>{children}</span>;
 };
 

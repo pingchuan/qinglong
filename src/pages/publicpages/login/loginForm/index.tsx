@@ -27,6 +27,7 @@ const Index: FC<Props> = ({ initialValues }) => {
   // 获取验证码
   const getCheckCodeAsync = async () => {
     const { data } = await getCheckCode();
+
     setCheckCodeSrc(data as string);
   };
 
@@ -34,6 +35,7 @@ const Index: FC<Props> = ({ initialValues }) => {
   const onSubmit = async (values: LoginSubmitValues) => {
     setLoading(true);
     const { user } = await postLogin(values);
+
     if (user) {
       setCookie('user', JSON.stringify(user));
       history.push('/');

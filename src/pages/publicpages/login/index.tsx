@@ -45,6 +45,7 @@ const Index: FC = () => {
 
   useEffect(() => {
     const user = JSON.parse(getCookie('user') || '{}');
+
     if (user?.id || user?.mail) {
       history.push('/');
     } else {

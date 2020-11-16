@@ -33,6 +33,7 @@ const Index: FC<Props> = ({ switchTab }) => {
     const { isSuccess } = await getMailCheckCode({
       mail: form.getFieldValue(FormName.mail),
     });
+
     setCheckCodeLoading(false);
     if (isSuccess) {
       setMailCheckCodeTime(30);
@@ -45,6 +46,7 @@ const Index: FC<Props> = ({ switchTab }) => {
   const onSubmit = async (values: RegisteredSubmitValues) => {
     setLoading(true);
     const { id } = await postRegistered(values);
+
     setLoading(false);
     if (id) {
       message.success('注册成功');
@@ -62,6 +64,7 @@ const Index: FC<Props> = ({ switchTab }) => {
 
   useEffect(() => {
     const localStorageTime = localStorage.getItem('mailTime');
+
     setMailCheckCodeTime(Number(localStorageTime));
     clearInterval(mailTimer);
     mailTimer = setInterval(() => {
@@ -72,6 +75,7 @@ const Index: FC<Props> = ({ switchTab }) => {
           return 0;
         }
         const nextCount = count - 1;
+
         localStorage.setItem('mailTime', String(nextCount));
         return nextCount;
       });

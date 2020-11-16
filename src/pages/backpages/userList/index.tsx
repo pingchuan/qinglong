@@ -52,6 +52,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
       dataIndex: 'sex',
       render: value => {
         let sexIcon = null;
+
         if (value === 'man') {
           sexIcon = (
             <Tooltip title="男">
@@ -107,6 +108,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
 
   const getUserInfoAsync = async () => {
     const res = await getUserInfo();
+
     setData(res);
   };
 
@@ -119,6 +121,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
 
   const onSubmit = async () => {
     const values = await userRef.current?.getData();
+
     if (values) {
       const resUser = await putUserInfo({
         ...values,
@@ -126,6 +129,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
           ? moment(values.birthday).valueOf()
           : values.birthday,
       });
+
       if (resUser) {
         getUserInfoAsync();
         modalChange(false);
@@ -150,6 +154,7 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
         ? moment(imageUploadUser.birthday).valueOf()
         : imageUploadUser.birthday,
     });
+
     setModalData({ visible: modalData.visible, user: resUser });
     if (currentUser.id === resUser.id) {
       setCookie('user', JSON.stringify(resUser));

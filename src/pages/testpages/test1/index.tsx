@@ -9,6 +9,7 @@ export default () => {
   const [imageSrc, setImageSrc] = useState('');
   const getCheckCodeAsync = async () => {
     const { data } = await getCheckCode();
+
     setImageSrc(data as string);
   };
   const openDrawer = () => {

@@ -20,6 +20,7 @@ const Index: FC<Props> = props => {
 
   const onSubmit = async (values: PlanValues) => {
     const { id } = await postPlan(values);
+
     if (id) {
       setVisible(false);
       dispatch({ type: 'planModal/getList' });

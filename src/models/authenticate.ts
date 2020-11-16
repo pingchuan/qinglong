@@ -52,6 +52,7 @@ const IndexModel: IndexModelType = {
   effects: {
     *getCurrentUser({ payload }, { call, put }) {
       const user = yield call(getUserInfo, payload);
+
       yield put({
         type: 'save',
         payload: { user },

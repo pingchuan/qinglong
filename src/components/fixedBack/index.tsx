@@ -4,6 +4,7 @@ import styles from './index.less';
 
 const Index: FC = () => {
   const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     const element = window;
     const onMouseEvent = function(event: MouseEvent) {
@@ -11,12 +12,14 @@ const Index: FC = () => {
       const clientY = event.clientY;
       const windowW = element.innerWidth;
       const windowH = element.innerHeight;
+
       if (windowW - clientX < 84 && windowH - clientY < 84) {
         setVisible(true);
       } else {
         setVisible(false);
       }
     };
+
     element.addEventListener('mousemove', onMouseEvent);
     return () => {
       element.removeEventListener('mousemove', onMouseEvent);

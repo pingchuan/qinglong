@@ -45,6 +45,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
 
   const onSubmit = async (values: PlanValues) => {
     const { id } = await putPlan(values);
+
     if (id) {
       setVisible(false);
       dispatch({ type: 'planModal/getList' });
@@ -53,6 +54,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
 
   const onDelete = async (deleteId: number) => {
     const { successCount } = await deletePlan({ id: deleteId });
+
     if (successCount) {
       dispatch({ type: 'planModal/getList' });
     }
@@ -112,6 +114,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
               (planDayValues || []).find(
                 item => !moment(item.time).diff(currentDate, 'day'),
               ) || initPlanDayValues;
+
             return (
               <Strip
                 key={index}

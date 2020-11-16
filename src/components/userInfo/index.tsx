@@ -39,8 +39,10 @@ const Index = forwardRef<UserRef, Props>(
         { ...user, ...values },
         cropImage ? { image: cropImage } : null,
       );
+
       return Promise.resolve(result);
     };
+
     useImperativeHandle(ref, () => ({
       getData,
     }));

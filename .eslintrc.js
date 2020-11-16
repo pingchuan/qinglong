@@ -30,5 +30,6 @@ module.exports = {
     'react/display-name': 0,
     'react/prop-types': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
+    'newline-after-var': 2, //变量声明后是否需要空一行
   },
 };

@@ -5,7 +5,7 @@ import { Modal, Upload, message } from 'antd';
 import { RcFile } from 'antd/lib/upload/interface';
 import { PlusOutlined } from '@ant-design/icons';
 import 'cropperjs/dist/cropper.css';
-import { postUpload } from '@/service';
+import { postUploadImage } from '@/service';
 import styles from './index.less';
 
 function getBase64(
@@ -13,6 +13,7 @@ function getBase64(
   callback: (file: string | ArrayBuffer | null) => void,
 ) {
   const reader = new FileReader();
+
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
@@ -42,6 +43,7 @@ export const Demo: React.FC<Props> = ({
   const beforeUpload = (file: RcFile) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     const isLt2M = file.size / 1024 / 1024 < 2;
+
     if (!isJpgOrPng) {
       message.error('仅支持JPG/PNG格式的文件');
     }
@@ -55,7 +57,8 @@ export const Demo: React.FC<Props> = ({
   };
 
   const handleSubmit = async () => {
-    const { path } = await postUpload({ file: getCropData() });
+    const { path } = await postUploadImage({ file: getCropData() });
+
     if (path && onOk) {
       setImage('');
       onOk(path);

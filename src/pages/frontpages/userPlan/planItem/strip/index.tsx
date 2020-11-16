@@ -31,6 +31,7 @@ const Index: FC<Props> = ({ value: propValue, showYearMonth }) => {
     const reqObj = { ...propValue, ...values };
     const postAndPutPlanDay = reqObj.id ? putPlanDay : postPlanDay;
     const { id } = await postAndPutPlanDay(reqObj);
+
     if (id) {
       setVisible(false);
       dispatch({ type: 'planModal/getList' });

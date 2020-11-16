@@ -36,6 +36,7 @@ const Index: FC<Props> = ({ visible, onOk, onCancel, initialValues }) => {
       [FormName.startTime]: startTime.valueOf(),
       [FormName.endTime]: endTime.valueOf(),
     };
+
     onOk(reqObj);
   };
 

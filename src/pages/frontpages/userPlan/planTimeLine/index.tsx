@@ -25,6 +25,7 @@ const Index: FC<Props> = ({ values: valuesProps, visible, onCancel }) => {
     return (planDayArr || []).map(item => {
       const { time, description, phiz, id } = item;
       let dot = null;
+
       switch (phiz) {
         case EnumPhiz.A:
           dot = <FrownTwoTone twoToneColor="#1890ff" />;

@@ -17,7 +17,9 @@ export function getUserInfo(params?: { id: string }): Promise<UserInfo[]> {
 }
 
 // 上传文件
-export function postUpload(params: { file: Blob }) {
+export function postUploadImage(params: {
+  file: Blob | string | ArrayBuffer | null;
+}) {
   return request('/api/public/uploadImage', {
     method: 'POST',
     body: params,

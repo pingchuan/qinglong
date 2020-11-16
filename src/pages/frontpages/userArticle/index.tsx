@@ -1,8 +1,17 @@
-import React, { FC, useState } from 'react';
-import { Table, Space, Button, Modal, Form, Input } from 'antd';
+import React, { FC, useState, useEffect } from 'react';
+import { Table, Button, Modal, Form, Input, Tooltip, Divider } from 'antd';
+import { history } from 'umi';
 import { ColumnsType } from 'antd/es/table';
+import { DeleteOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
 import { rulesLength } from '@/utils/validators';
+import DeleteModal from '@/components/deleteModel';
 import { FormName } from './constant';
+import {
+  getArticleList,
+  postArticle,
+  putArticle,
+  deleteArticle,
+} from './service';
 import styles from './index.less';
 
 const { Item: FormItem } = Form;
@@ -28,12 +37,21 @@ const Index: FC = () => {
     visible: false,
     data: initArticle(),
   });
+  const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState<Article[]>([]);
   const columns: ColumnsType<Article> = [
     {
       ellipsis: true,
       title: '标题',
       dataIndex: 'name',
+      render: (value, record) => (
+        <Button
+          type="link"
+          onClick={() => setModalData({ visible: true, data: record })}
+        >
+          {value}
+        </Button>
+      ),
     },
     {
       width: 300,
@@ -41,20 +59,93 @@ const Index: FC = () => {
       dataIndex: 'description',
     },
     {
-      width: 100,
+      width: 180,
       title: '操作',
       dataIndex: 'id',
-      render: (_, record) => {
+      render: currentId => {
         return (
-          <Space>
-            <Button type="link" onClick={console.log}>
-              编辑
-            </Button>
-          </Space>
+          <>
+            <Tooltip title="查看文章">
+              <Button
+                icon={<EyeOutlined />}
+                type="link"
+                onClick={() =>
+                  history.push({
+                    pathname: '/qinglong/userArticle/info',
+                    state: {
+                      id: currentId,
+                    },
+                  })
+                }
+              />
+            </Tooltip>
+            <Divider type="vertical" />
+            <Tooltip title="修改文章">
+              <Button
+                icon={<EditOutlined />}
+                type="link"
+                onClick={() =>
+                  history.push({
+                    pathname: '/qinglong/userArticle/edit',
+                    state: {
+                      id: currentId,
+                    },
+                  })
+                }
+              />
+            </Tooltip>
+            <Divider type="vertical" />
+            <DeleteModal onOk={onDelete} id={currentId}>
+              <Tooltip title="删除">
+                <Button
+                  icon={<DeleteOutlined className={styles.delete} />}
+                  type="link"
+                />
+              </Tooltip>
+            </DeleteModal>
+          </>
         );
       },
     },
   ];
+
+  const getArticleListAsync = async () => {
+    setLoading(true);
+    const res = await getArticleList();
+
+    setLoading(false);
+    setDataSource(res);
+  };
+
+  const onSubmit = async () => {
+    const values = await form.validateFields();
+    const params = { ...modalData.data, ...values };
+    const apiFun = params.id ? putArticle : postArticle;
+    const { id } = await apiFun(params);
+
+    if (id) {
+      setModalData({ visible: false, data: initArticle() });
+      getArticleListAsync();
+    }
+  };
+
+  const onDelete = async (deleteId: string) => {
+    const { successCount } = await deleteArticle({ id: deleteId });
+
+    if (successCount) {
+      getArticleListAsync();
+    }
+  };
+
+  useEffect(() => {
+    getArticleListAsync();
+  }, []);
+  useEffect(() => {
+    form.setFieldsValue({
+      [FormName.name]: modalData.data.name,
+      [FormName.description]: modalData.data.description,
+    });
+  }, [modalData, form]);
 
   return (
     <>
@@ -69,6 +160,7 @@ const Index: FC = () => {
         </div>
         <Table<Article>
           rowKey="id"
+          loading={loading}
           bordered={true}
           columns={columns}
           dataSource={dataSource}
@@ -79,6 +171,7 @@ const Index: FC = () => {
         title={`${modalData.data.id ? '编辑' : '新增'}文章`}
         destroyOnClose
         maskClosable={false}
+        onOk={onSubmit}
         onCancel={() =>
           setModalData({
             visible: false,
@@ -86,20 +179,18 @@ const Index: FC = () => {
           })
         }
       >
-        <Form {...layout} form={form} preserve={false}>
+        <Form {...layout} form={form} name="article" preserve={false}>
           <FormItem
             name={FormName.name}
             rules={rulesLength({ max: 64, required: true })}
             label="标题"
-            initialValue={modalData.data.name}
           >
             <Input placeholder="请输入标题" />
           </FormItem>
           <FormItem
-            name={FormName.name}
+            name={FormName.description}
             rules={rulesLength({ max: 200 })}
             label="描述"
-            initialValue={modalData.data.name}
           >
             <TextArea rows={1} placeholder="不超过200字" />
           </FormItem>

@@ -6,7 +6,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  transition      : "color 9999s ease-out, background-color 9999s ease-out";
+  transition: "color 9999s ease-out, background-color 9999s ease-out";
   transition-delay: 9999s;
 }
 
@@ -37,14 +37,18 @@ input:-webkit-autofill:active {
 }
 
 .ant-modal-header::after {
-  content          : '';
-  position         : absolute;
-  top              : -65px;
-  left             : 50%;
-  transform        : translate(-50%, 0);
-  height           : 100px;
-  width            : 100px;
-  background       : url('./assets/images/qinglong.png');
+  content: '';
+  position: absolute;
+  top: -65px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 100px;
+  width: 100px;
+  background: url('./assets/images/qinglong.png');
   background-repeat: no-repeat;
-  background-size  : 100% 100%;
+  background-size: 100% 100%;
+}
+
+.ant-message {
+  z-index: 999999 !important;
 }

@@ -7,6 +7,7 @@ type JsonOrBlob = 'json' | 'blob';
 interface ExtendOptions extends RequestInit {
   responseType?: JsonOrBlob;
   hasTip?: boolean;
+  tipText?: string;
   bodyType?: JsonOrForm;
   body?: any;
 }
@@ -51,6 +52,7 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
     responseType,
     bodyType,
     hasTip,
+    tipText,
     ...otherExtendOptions
   } = extendOptions;
   const headers = headerWrapper(bodyType, extendOptions);
@@ -71,7 +73,7 @@ const index: IndexType = async function index(apiUrl = '', extendOptions = {}) {
     const response = await fetch(url, options);
 
     if (statusValidate(response)) {
-      hasTip && message.success('操作成功');
+      hasTip && message.success(tipText || '操作成功');
       return responseType === 'blob' ? response.blob() : response.json();
     } else {
       return {};

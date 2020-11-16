@@ -2,7 +2,12 @@ import React, { FC, useEffect, useState } from 'react';
 import { RollbackOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
-const Index: FC = () => {
+interface Props {
+  visible?: boolean;
+  onOk?: () => void;
+}
+
+const Index: FC<Props> = ({ visible: visibleProps, children, onOk }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -25,9 +30,9 @@ const Index: FC = () => {
       element.removeEventListener('mousemove', onMouseEvent);
     };
   }, []);
-  return visible ? (
-    <div className={styles.content}>
-      <RollbackOutlined />
+  return visible || visibleProps ? (
+    <div className={styles.content} onClick={onOk || console.log}>
+      {children || <RollbackOutlined />}
     </div>
   ) : null;
 };

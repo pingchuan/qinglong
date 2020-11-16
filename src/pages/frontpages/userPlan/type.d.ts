@@ -4,15 +4,15 @@ export interface PlanDayValues {
   time: string;
   description: string;
   phiz: EnumPhiz;
-  id?: number;
-  planId?: number;
+  id?: string;
+  planId?: string;
 }
 
 export interface PlanValues {
   name: string;
   startTime: number;
   endTime: number;
-  id?: number;
+  id?: string;
   values?: PlanDayValues[];
   hasMonthGap?: string;
 }

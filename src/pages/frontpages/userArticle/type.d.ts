@@ -1,5 +1,6 @@
 interface Article {
   id?: string;
   name: string;
-  description: string;
+  value?: string;
+  description?: string;
 }

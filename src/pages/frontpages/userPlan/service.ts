@@ -26,7 +26,7 @@ export function putPlan(params: PlanValues) {
 }
 
 // 删除任务
-export function deletePlan(params: { id: number }) {
+export function deletePlan(params: { id: string }) {
   return request(`/api/plan?${qs.stringify(params)}`, {
     method: 'DELETE',
     hasTip: true,

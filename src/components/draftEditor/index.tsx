@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Upload } from 'antd';
 import { history } from 'umi';
 import { RcCustomRequestOptions } from 'antd/lib/upload/interface';
@@ -30,7 +30,7 @@ BraftEditor.use(
 
 interface Props {
   defaultHtml?: string;
-  saveData?: (value: string) => void;
+  saveData?: (value: string, autoSave?: boolean) => void;
 }
 
 const Index: FC<Props> = ({ defaultHtml, saveData }) => {
@@ -134,8 +134,25 @@ const Index: FC<Props> = ({ defaultHtml, saveData }) => {
     'clear',
   ];
 
+  useEffect(() => {
+    setEditorState(BraftEditor.createEditorState(defaultHtml));
+    const timer = setInterval(() => {
+      if (
+        saveData &&
+        editorState?.toHTML() &&
+        editorState?.toHTML() !== '<p></p>'
+      ) {
+        saveData(editorState?.toHTML(), true);
+      }
+    }, 1000 * 60);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [defaultHtml]);
+
   return (
-    <>
+    <div className={styles.content}>
       <div className="editor-container">
         <BraftEditor
           id="editor-with-color-picker"
@@ -151,7 +168,7 @@ const Index: FC<Props> = ({ defaultHtml, saveData }) => {
         onClose={() => setPreviewVisible(false)}
         value={editorState?.toHTML()}
       />
-    </>
+    </div>
   );
 };
 

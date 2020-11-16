@@ -29,7 +29,11 @@ const Index: FC<Props> = props => {
     });
   };
 
-  return <span onClick={showConfirm}>{children}</span>;
+  return (
+    <span style={{ cursor: 'pointer' }} onClick={showConfirm}>
+      {children}
+    </span>
+  );
 };
 
 export default Index;

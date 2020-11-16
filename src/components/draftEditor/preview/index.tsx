@@ -17,7 +17,7 @@ const Index: FC<Props> = ({ visible, value, onClose }) => {
       bodyStyle={{
         margin: 0,
         padding: 0,
-        background: '#999999',
+        background: 'linear-gradient(45deg, #f8fafc, #14897266)',
       }}
     >
       <div

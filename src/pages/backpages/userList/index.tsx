@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
-import { Table, Tooltip, Space, Button, Modal } from 'antd';
+import { Table, Tooltip, Button, Modal } from 'antd';
 import moment from 'moment';
 import { connect, Dispatch } from 'umi';
-import { WomanOutlined, ManOutlined } from '@ant-design/icons';
+import { WomanOutlined, ManOutlined, EditOutlined } from '@ant-design/icons';
 import { getUserInfo, putUserInfo } from '@/service';
 import { UserInfo as UserInfoType } from '@/models/authenticate';
 import { ColumnsType } from 'antd/es/table';
@@ -91,16 +91,18 @@ const Index: FC<Props> = ({ currentUser, dispatch }) => {
       dataIndex: 'mail',
     },
     {
-      width: 100,
+      width: 80,
       title: '操作',
       dataIndex: 'id',
       render: (_, record) => {
         return (
-          <Space>
-            <Button type="link" onClick={() => modalChange(true, record)}>
-              编辑
-            </Button>
-          </Space>
+          <Tooltip title="编辑">
+            <Button
+              icon={<EditOutlined />}
+              type="link"
+              onClick={() => modalChange(true, record)}
+            />
+          </Tooltip>
         );
       },
     },

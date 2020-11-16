@@ -6,6 +6,7 @@ import { Location } from 'history';
 import { Dispatch } from 'redux';
 import zhCN from 'antd/es/locale/zh_CN';
 import { getCookie } from '@/utils/public';
+import { UserInfo } from '@/models/authenticate';
 import LeftRightLayout from './leftRightLayout';
 import FullScreenLayout from './fullScreenLayout';
 import { fullScreenLayoutPath, noAuthenticatePath } from 'config/router';
@@ -15,10 +16,11 @@ message.config({ maxCount: 1 });
 interface IndexPropsType {
   dispatch: Dispatch;
   location: Location;
+  currentUser: UserInfo;
 }
 
 const Index: FC<IndexPropsType> = props => {
-  const { location, dispatch } = props;
+  const { location, dispatch, currentUser } = props;
 
   useEffect(() => {
     const user = JSON.parse(getCookie('user') || '{}');
@@ -28,7 +30,7 @@ const Index: FC<IndexPropsType> = props => {
       !noAuthenticatePath.includes(location.pathname)
     ) {
       history.push('/qinglong/login');
-    } else if (user.id) {
+    } else if (user.id && user.id !== currentUser.id) {
       dispatch({
         type: 'authenticate/getCurrentUser',
         payload: { id: user.id },
@@ -63,4 +65,6 @@ const IndexWrapper: FC<IndexPropsType> = props => {
   );
 };
 
-export default connect()(IndexWrapper);
+export default connect(({ authenticate }) => ({
+  currentUser: authenticate.user,
+}))(IndexWrapper);

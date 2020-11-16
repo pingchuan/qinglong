@@ -52,7 +52,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
     }
   };
 
-  const onDelete = async (deleteId: number) => {
+  const onDelete = async (deleteId: string) => {
     const { successCount } = await deletePlan({ id: deleteId });
 
     if (successCount) {
@@ -87,7 +87,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
             <Tooltip title="编辑">
               <EditOutlined onClick={() => setVisible(true)} />
             </Tooltip>
-            <DeleteModal onOk={onDelete} id={Number(planId)}>
+            <DeleteModal onOk={onDelete} id={String(planId)}>
               <Tooltip title="删除">
                 <DeleteOutlined className={styles.delete} />
               </Tooltip>
@@ -104,7 +104,7 @@ const Index: FC<Props> = ({ values: propsValues }) => {
               .add(index, 'day')
               .format(momentFormat);
             const initPlanDayValues: PlanDayValues = {
-              id: 0,
+              id: '',
               planId,
               time: currentDate,
               description: '',

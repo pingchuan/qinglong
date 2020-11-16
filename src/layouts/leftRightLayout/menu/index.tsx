@@ -7,6 +7,7 @@ import {
   PieChartOutlined,
   ContainerOutlined,
   MailOutlined,
+  CalendarOutlined,
   BulbOutlined,
   ProfileOutlined,
   UserOutlined,
@@ -30,8 +31,11 @@ const Index: FC = () => {
       mode="inline"
       onClick={menuOnClick}
     >
-      <MenuItem key="/qinglong/userPlan" icon={<ProfileOutlined />}>
+      <MenuItem key="/qinglong/userPlan" icon={<CalendarOutlined />}>
         我的计划
+      </MenuItem>
+      <MenuItem key="/qinglong/userArticle" icon={<ProfileOutlined />}>
+        我的文章
       </MenuItem>
       <MenuItem key="/qinglong/userList" icon={<UserOutlined />}>
         用户列表

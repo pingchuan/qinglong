@@ -11,13 +11,13 @@ interface Props {
 const Index: FC<Props> = ({ visible, value, onClose }) => {
   return (
     <Drawer
+      className={styles.drawer}
       width="calc(100vw - 250px)"
       visible={visible}
       onClose={onClose}
       bodyStyle={{
         margin: 0,
         padding: 0,
-        background: 'linear-gradient(45deg, #f8fafc, #14897266)',
       }}
     >
       <div

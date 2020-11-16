@@ -1,8 +1,16 @@
 @import '~@/assets/less/color.less';
 
+.drawer {
+  :global {
+    .ant-drawer-close {
+      color: @green  !important;
+    }
+  }
+}
+
 .content {
   box-sizing: border-box;
-  width: 1000px;
+  width: 100%;
   max-width: 100%;
   min-height: 100%;
   margin: 0 auto;

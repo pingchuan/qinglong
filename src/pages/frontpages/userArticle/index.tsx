@@ -39,6 +39,12 @@ const Index: FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState<Article[]>([]);
+  const historyJump = (path: 'info' | 'edit', id: string) => {
+    history.push({
+      pathname: `/qinglong/userArticle/${path}`,
+      state: { id },
+    });
+  };
   const columns: ColumnsType<Article> = [
     {
       ellipsis: true,
@@ -69,14 +75,7 @@ const Index: FC = () => {
               <Button
                 icon={<EyeOutlined />}
                 type="link"
-                onClick={() =>
-                  history.push({
-                    pathname: '/qinglong/userArticle/info',
-                    state: {
-                      id: currentId,
-                    },
-                  })
-                }
+                onClick={() => historyJump('info', currentId)}
               />
             </Tooltip>
             <Divider type="vertical" />
@@ -84,14 +83,7 @@ const Index: FC = () => {
               <Button
                 icon={<EditOutlined />}
                 type="link"
-                onClick={() =>
-                  history.push({
-                    pathname: '/qinglong/userArticle/edit',
-                    state: {
-                      id: currentId,
-                    },
-                  })
-                }
+                onClick={() => historyJump('edit', currentId)}
               />
             </Tooltip>
             <Divider type="vertical" />
@@ -126,6 +118,9 @@ const Index: FC = () => {
     if (id) {
       setModalData({ visible: false, data: initArticle() });
       getArticleListAsync();
+      if (!params.id) {
+        historyJump('edit', id);
+      }
     }
   };
 

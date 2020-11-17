@@ -8,6 +8,7 @@ interface Props {
   id: number | string;
   content?: string | JSX.Element;
   title?: string;
+  disabled?: boolean;
 }
 
 const Index: FC<Props> = props => {
@@ -17,8 +18,12 @@ const Index: FC<Props> = props => {
     title = '系统提示：',
     content = '此操作不可逆转，请确认无误后再提交请求',
     children,
+    disabled,
   } = props;
   const showConfirm = () => {
+    if (disabled) {
+      return false;
+    }
     confirm({
       title,
       content,

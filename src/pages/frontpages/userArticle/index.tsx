@@ -9,7 +9,7 @@ import {
   Tooltip,
   Divider,
 } from 'antd';
-import { history } from 'umi';
+import { history, useSelector } from 'umi';
 import { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
 import { rulesLength } from '@/utils/validators';
@@ -43,6 +43,7 @@ const Index: FC = () => {
     labelCol: { span: 4 },
     wrapperCol: { span: 19 },
   };
+  const currentUser = useSelector(({ authenticate }) => authenticate.user);
   const [form] = Form.useForm();
   const [modalData, setModalData] = useState<ModalData>({
     visible: false,
@@ -61,14 +62,17 @@ const Index: FC = () => {
       ellipsis: true,
       title: '标题',
       dataIndex: 'name',
-      render: (value, record) => (
-        <Button
-          type="link"
-          onClick={() => setModalData({ visible: true, data: record })}
-        >
-          {value}
-        </Button>
-      ),
+      render: (value, record) =>
+        record.userId === currentUser.id ? (
+          <Button
+            type="link"
+            onClick={() => setModalData({ visible: true, data: record })}
+          >
+            {value}
+          </Button>
+        ) : (
+          value
+        ),
     },
     {
       width: 300,
@@ -79,7 +83,7 @@ const Index: FC = () => {
       width: 180,
       title: '操作',
       dataIndex: 'id',
-      render: currentId => {
+      render: (currentId, record) => {
         return (
           <>
             <Tooltip title="查看文章">
@@ -95,14 +99,26 @@ const Index: FC = () => {
                 icon={<EditOutlined />}
                 type="link"
                 onClick={() => historyJump('edit', currentId)}
+                disabled={record.userId !== currentUser.id}
               />
             </Tooltip>
             <Divider type="vertical" />
-            <DeleteModal onOk={onDelete} id={currentId}>
+            <DeleteModal
+              onOk={onDelete}
+              id={currentId}
+              disabled={record.userId !== currentUser.id}
+            >
               <Tooltip title="删除">
                 <Button
-                  icon={<DeleteOutlined className={styles.delete} />}
+                  icon={
+                    <DeleteOutlined
+                      className={
+                        record.userId === currentUser.id && styles.delete
+                      }
+                    />
+                  }
                   type="link"
+                  disabled={record.userId !== currentUser.id}
                 />
               </Tooltip>
             </DeleteModal>

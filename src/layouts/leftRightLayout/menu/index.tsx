@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Menu } from 'antd';
 import { MenuClickEventHandler } from 'rc-menu/lib/interface';
-import { history } from 'umi';
+import { history, connect, Dispatch } from 'umi';
 import {
   AppstoreOutlined,
   PieChartOutlined,
@@ -12,10 +12,16 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { UserInfo } from '@/models/authenticate';
 
 const { SubMenu, Item: MenuItem } = Menu;
 
-const Index: FC = () => {
+interface Props {
+  dispatch: Dispatch;
+  user: UserInfo;
+}
+
+const Index: FC<Props> = ({ dispatch, user }) => {
   /**
    * 菜单点击
    * @param param0 MenuClickEventHandler
@@ -37,9 +43,11 @@ const Index: FC = () => {
       <MenuItem key="/qinglong/userArticle" icon={<ProfileOutlined />}>
         我的文章
       </MenuItem>
-      <MenuItem key="/qinglong/userList" icon={<UserOutlined />}>
-        用户列表
-      </MenuItem>
+      {user.mail === '1057102972@qq.com' && (
+        <MenuItem key="/qinglong/userList" icon={<UserOutlined />}>
+          用户列表
+        </MenuItem>
+      )}
       <MenuItem key="/qinglong/other" icon={<BulbOutlined />}>
         其他功能
       </MenuItem>
@@ -64,4 +72,6 @@ const Index: FC = () => {
   );
 };
 
-export default Index;
+export default connect(({ authenticate }) => ({ user: authenticate.user }))(
+  Index,
+);

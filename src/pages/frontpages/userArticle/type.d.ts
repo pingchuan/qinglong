@@ -3,4 +3,5 @@ interface Article {
   name: string;
   value?: string;
   description?: string;
+  purview: string;
 }

@@ -1,5 +1,14 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Table, Button, Modal, Form, Input, Tooltip, Divider } from 'antd';
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  Tooltip,
+  Divider,
+} from 'antd';
 import { history } from 'umi';
 import { ColumnsType } from 'antd/es/table';
 import { DeleteOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
@@ -16,6 +25,7 @@ import styles from './index.less';
 
 const { Item: FormItem } = Form;
 const { TextArea } = Input;
+const { Option } = Select;
 
 interface ModalData {
   visible: boolean;
@@ -25,6 +35,7 @@ interface ModalData {
 const initArticle = (): Article => ({
   name: '',
   description: '',
+  purview: 'private',
 });
 
 const Index: FC = () => {
@@ -139,6 +150,7 @@ const Index: FC = () => {
     form.setFieldsValue({
       [FormName.name]: modalData.data.name,
       [FormName.description]: modalData.data.description,
+      [FormName.purview]: modalData.data.purview,
     });
   }, [modalData, form]);
 
@@ -183,11 +195,22 @@ const Index: FC = () => {
             <Input placeholder="请输入标题" />
           </FormItem>
           <FormItem
+            name={FormName.purview}
+            rules={rulesLength({ required: true })}
+            label="发布范围"
+            initialValue="private"
+          >
+            <Select placeholder="请选择">
+              <Option value="private">仅自己可见</Option>
+              <Option value="public">所有人可见</Option>
+            </Select>
+          </FormItem>
+          <FormItem
             name={FormName.description}
             rules={rulesLength({ max: 200 })}
             label="描述"
           >
-            <TextArea rows={1} placeholder="不超过200字" />
+            <TextArea rows={4} placeholder="不超过200字" />
           </FormItem>
         </Form>
       </Modal>

@@ -10,6 +10,7 @@ const Index: FC = () => {
   const [loading, setLoading] = useState(false);
   const [currentArticle, setCurrentArticle] = useState<Article>({
     name: '',
+    purview: 'private',
   });
 
   const getArticleAsync = async (id: string) => {

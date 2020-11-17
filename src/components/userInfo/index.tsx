@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { Avatar, Form, Input, Select, DatePicker } from 'antd';
+import { Avatar, Form, Input, Select, DatePicker, Tooltip } from 'antd';
 import moment from 'moment';
 import { UserInfo } from '@/models/authenticate';
 import { rulesLength } from '@/utils/validators';
@@ -64,9 +64,11 @@ const Index = forwardRef<UserRef, Props>(
         <div className={styles.userInfo}>
           <section className={styles.userLeft}>
             <div>
-              <a onClick={() => setVisible(true)}>
-                <Avatar size={80} src={user.image} />
-              </a>
+              <Tooltip title="点击更新头像">
+                <a onClick={() => setVisible(true)}>
+                  <Avatar size={80} src={user.image} />
+                </a>
+              </Tooltip>
               <b>{user.username}</b>
               <span className={styles.mail}>{user.mail}</span>
             </div>

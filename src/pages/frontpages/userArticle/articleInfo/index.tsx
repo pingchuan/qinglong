@@ -1,14 +1,16 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Button, Empty, Spin } from 'antd';
-import { useLocation, history } from 'umi';
+import { useLocation, history, useSelector } from 'umi';
 import FixedBack from '@/components/fixedBack';
 import { getArticle } from '../service';
 import styles from './index.less';
 
 const Index: FC = () => {
+  const currentUser = useSelector(({ authenticate }) => authenticate.user);
   const { state } = useLocation<{ id: string }>();
   const [currentArticle, setCurrentArticle] = useState<Article>({
     name: '',
+    purview: 'private',
   });
   const [loading, setLoading] = useState(false);
 
@@ -30,19 +32,21 @@ const Index: FC = () => {
       {!currentArticle?.value || currentArticle.value === '<p></p>' ? (
         <div className={styles.empty}>
           <Empty description="暂无内容">
-            <Button
-              type="primary"
-              onClick={() =>
-                history.push({
-                  pathname: '/qinglong/userArticle/edit',
-                  state: {
-                    id: state?.id,
-                  },
-                })
-              }
-            >
-              编辑文章
-            </Button>
+            {currentUser.id === currentArticle.userId && (
+              <Button
+                type="primary"
+                onClick={() =>
+                  history.push({
+                    pathname: '/qinglong/userArticle/edit',
+                    state: {
+                      id: state?.id,
+                    },
+                  })
+                }
+              >
+                编辑文章
+              </Button>
+            )}
           </Empty>
         </div>
       ) : (
